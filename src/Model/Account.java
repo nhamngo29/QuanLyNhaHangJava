@@ -9,5 +9,5 @@ package Model;
  * @author Nham Ngo
  */
 public class Account {
-    
+    int id;
 }
