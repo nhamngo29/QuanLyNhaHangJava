@@ -8,7 +8,7 @@ package Model;
  *
  * @author Nham Ngo
  */
-public class Account {
+public class NguoiDung {
     String UserName,Password;
     
 }
