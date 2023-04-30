@@ -6,6 +6,9 @@ package View;
 
 import POJO.NhanVien;
 import UIS.Auth;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -17,16 +20,17 @@ public class frmMain extends javax.swing.JFrame {
      * Creates new form frmMain
      */
     NhanVien nv;
-    
+
     public frmMain() {
         initComponents();
         this.setLocationRelativeTo(null);
-        if(Auth.isManager())
-        {
-            btnQuanLy.setVisible(true);
-        }
-        else
-            btnQuanLy.setVisible(false);
+        
+//        if(Auth.isManager())
+//        {
+//            btnQuanLy.setVisible(true);
+//        }
+//        else
+//            btnQuanLy.setVisible(false);
     }
 
     /**
@@ -41,7 +45,7 @@ public class frmMain extends javax.swing.JFrame {
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         btnQuanLy = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
+        menuItemQLFood = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
@@ -52,15 +56,28 @@ public class frmMain extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(56, 13));
+
+        desktopPane.setPreferredSize(new java.awt.Dimension(1154, 623));
 
         btnQuanLy.setMnemonic('f');
         btnQuanLy.setText("Quản lý");
 
-        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        openMenuItem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-menu-20.png")); // NOI18N
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Thực đơn");
-        btnQuanLy.add(openMenuItem);
+        menuItemQLFood.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemQLFood.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-menu-20.png")); // NOI18N
+        menuItemQLFood.setMnemonic('o');
+        menuItemQLFood.setText("Thực đơn");
+        menuItemQLFood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuItemQLFoodMouseClicked(evt);
+            }
+        });
+        menuItemQLFood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemQLFoodActionPerformed(evt);
+            }
+        });
+        btnQuanLy.add(menuItemQLFood);
 
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         saveMenuItem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-port-20.png")); // NOI18N
@@ -108,19 +125,35 @@ public class frmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1050, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuItemQLFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuItemQLFoodMouseClicked
+        frmFood frm = new frmFood();
+        frm.setVisible(true);
+        frm.setBounds(50, 50, 500, 400);
+        frm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frm.setLayout(new BorderLayout());
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_menuItemQLFoodMouseClicked
+
+    private void menuItemQLFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemQLFoodActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        frmFood frm = new frmFood();
+        frm.pack();
+        frm.setMaximizable(true);
+        frm.getContentPane().setPreferredSize(new Dimension(100,100));
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_menuItemQLFoodActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,7 +200,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JMenuItem menuItemQLFood;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables

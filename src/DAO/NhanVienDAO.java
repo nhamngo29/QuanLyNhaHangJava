@@ -14,28 +14,14 @@ import java.util.List;
  * @author Nham Ngo
  */
 public class NhanVienDAO extends NhaHangDAO<NhanVien, Integer>{
-    String INSERT_SQL = "INSERT INTO NHANVIEN(MaNV, Password, HoTen, SoDT, ChucVu, GioiTinh, Avatar)VALUES(?,?,?,?,?,?,?)";
-    String UPDATE_SQL = "UPDATE NHANVIEN SET Password=?, HoTen=?, SoDT=?, ChucVu=?, GioiTinh=?, Avatar=? where MaNV = ?";
+    String INSERT_OR_UPDATE_SQL = "{Call SP_InsertOrUpdateNhanVien(?,?,?,?,?,?,?)}";
+    
     String DELETE_SQL = "DELETE FROM NHANVIEN WHERE MaNV =?";
     String SELECT_ALL_SQL = "SELECT * FROM NHANVIEN";
     String SELETE_BY_ID_SQL = "SELECT * FROM NHANVIEN WHERE MaNV =?";
     String SP_LOGIN="{CALL SP_Login(?,?)}";
-    @Override
-    public void insert(NhanVien entity) {
-        try {
-            DataProvider.update(INSERT_SQL, entity.getMaNV(), entity.getMatKhau(), entity.getHoTen(), entity.getSoDT(), entity.getChucVu(), entity.isGioiTinh(), entity.getAvatar());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    @Override
-    public void update(NhanVien entity) {
-        try {
-            DataProvider.update(UPDATE_SQL, entity.getMatKhau(), entity.getHoTen(), entity.getSoDT(), entity.getChucVu(), entity.isGioiTinh(), entity.getAvatar(), entity.getMaNV());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    
+    
     @Override
     public List<NhanVien> selectAll() {
         return this.selectBySql(SELECT_ALL_SQL);
@@ -109,4 +95,14 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, Integer>{
         }
         return list.get(0);
     }
+
+    @Override
+    public void insertOrUpdate(NhanVien entity) {
+        try {
+            DataProvider.update(INSERT_OR_UPDATE_SQL, entity);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }

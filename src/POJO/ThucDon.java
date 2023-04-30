@@ -14,9 +14,9 @@ public class ThucDon {
     private String TenMon;
     private double GiaTien;
     private String HinhAnh;
-    private String Loai;
+    private int Loai;
 
-    public ThucDon(String MaMon, String TenMon, double GiaTien, String HinhAnh, String Loai) {
+    public ThucDon(String MaMon, String TenMon, double GiaTien, String HinhAnh, int Loai) {
         this.MaMon = MaMon;
         this.TenMon = TenMon;
         this.GiaTien = GiaTien;
@@ -60,11 +60,11 @@ public class ThucDon {
         this.HinhAnh = HinhAnh;
     }
 
-    public String getLoai() {
+    public int getLoai() {
         return Loai;
     }
 
-    public void setLoai(String Loai) {
+    public void setLoai(int Loai) {
         this.Loai = Loai;
     }
     

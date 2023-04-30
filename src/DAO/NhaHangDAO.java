@@ -11,9 +11,8 @@ import java.util.List;
  * @author Nham Ngo
  */
 public abstract class NhaHangDAO<EntityType, KeyType> {
-    abstract public void insert(EntityType entity);
+    abstract public void insertOrUpdate(EntityType entity);
 
-    abstract public void update(EntityType entity);
 
     abstract public void delete(KeyType id);
 
