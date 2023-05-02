@@ -18,7 +18,7 @@ public class LoaiThucDonDAO extends NhaHangDAO<LoaiThucDon, Integer>{
     String DELETE_SQL = "DELETE FROM LoaiThucDon WHERE MaLoaiTD =?";
     String SELECT_ALL_SQL = "SELECT * FROM LoaiThucDon";
     String SELETE_BY_ID = "SELECT * FROM LoaiThucDon WHERE MaLoaiTD =?";
-
+    String SELETE_BY_NAME = "SELECT * FROM LoaiThucDon WHERE Ten=?";
     @Override
     public void insertOrUpdate(LoaiThucDon entity) {
         try {
@@ -45,7 +45,17 @@ public class LoaiThucDonDAO extends NhaHangDAO<LoaiThucDon, Integer>{
         }
         return list.get(0);
     }
-
+    public LoaiThucDon selectByName(String ten)
+    {
+        List<LoaiThucDon> list = this.selectBySql(SELETE_BY_NAME, ten);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
+    public LoaiThucDonDAO() {
+    }
+   
     @Override
     public List<LoaiThucDon> selectAll() {
         return this.selectBySql(SELECT_ALL_SQL);

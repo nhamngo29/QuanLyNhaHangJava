@@ -139,10 +139,10 @@ public class frmFood extends javax.swing.JInternalFrame {
             System.out.println("Exception occured :" + e.getMessage());
         }
     }
-    private void OpenFile(String file)
-    {
+
+    private void OpenFile(String file) {
         try {
-            File path=new File(file);
+            File path = new File(file);
             getDesktop().open(path);
         } catch (IOException e) {
             e.printStackTrace();
@@ -233,8 +233,7 @@ public class frmFood extends javax.swing.JInternalFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int row = tbMenu.getSelectedRow();
-                if(row>=0)
-                {
+                if (row >= 0) {
                     txtMaMon.setText((String) tbMenu.getValueAt(row, 0));
                     txtTenMon.setText((String) tbMenu.getValueAt(row, 1));
                     txtGia.setText(String.valueOf(tbMenu.getValueAt(row, 2)));
@@ -544,14 +543,36 @@ public class frmFood extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnChooseImageActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if (!checkVal()) {
-            return;
+        if (btnInportEX.isEnabled()) {
+            MyDialog dlg = new MyDialog("Dữ liệu cũ sẽ bị thay dỗi, tiếp tục?", MyDialog.WARNING_DIALOG);
+            if (dlg.getAction() != MyDialog.OK_OPTION) {
+                return;
+            }
+            int row = tbMenu.getRowCount();
+            for (int i = 0; i < row; i++) {
+                String MaMon = tbMenu.getValueAt(i, 0) + "";
+                String TenMon = tbMenu.getValueAt(i,1) + "";
+                Float GiaThanh = Float.valueOf(tbMenu.getValueAt(i, 2) + "");
+                LoaiThucDon at = ltdDao.selectByName(tbMenu.getValueAt(i, 3).toString());
+                int Loai = at.getMaLoaiTD();
+                String Img = tbMenu.getValueAt(i, 4) + "";
+                ThucDon a = new ThucDon(MaMon, TenMon, GiaThanh, Img, Loai);
+                if (a != null) {
+                    dao.insertOrUpdate(a);
+                }
+            }
+            new MyDialog("Đã lưu vào CSDL thành công!", MyDialog.SUCCESS_DIALOG);
+        } else {
+            if (!checkVal()) {
+                return;
+            } else {
+                InsertOrUpdate();
+                
+            }
         }
-        InsertOrUpdate();
         Enable(true);
     }//GEN-LAST:event_btnSaveActionPerformed
-    void EnableText(Boolean s)
-    {
+    void EnableText(Boolean s) {
         txtMaMon.setEditable(s);
         txtGia.setEditable(s);
         txtTenMon.setEditable(s);
@@ -559,34 +580,27 @@ public class frmFood extends javax.swing.JInternalFrame {
         btnChooseImage.setEnabled(s);
     }
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        if(txtMaMon.getText().isEmpty())
-        {
+        if (txtMaMon.getText().isEmpty()) {
             MsgBox.alert(this, "Vui lòng chọn hoặc tìm kiếm món bạn muốn sữa?");
             return;
+        } else {
+            Enable(false);
+            EnableText(true);
+            txtMaMon.setEnabled(false);
         }
-        else
-        {
-             Enable(false);
-             EnableText(true);
-             txtMaMon.setEnabled(false);
-        }
-        
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         // TODO add your handling code here:
-        if(!txtMaMon.getText().isEmpty())
-        {
-            if(MsgBox.confirm(this, "Bạn có chắc chắn muốn xóa món "+txtTenMon.getText()+" ra khỏi thức đơn không?"))
-            {
+        if (!txtMaMon.getText().isEmpty()) {
+            if (MsgBox.confirm(this, "Bạn có chắc chắn muốn xóa món " + txtTenMon.getText() + " ra khỏi thức đơn không?")) {
                 dao.delete(txtMaMon.getText());
                 fillToTable(dao.selectAll());
                 this.clearForm(); // xóa trắng form
             }
-        }
-        else
-        {
-             MsgBox.alert(this, "Vui lòng chọn hoặc tìm kiếm món bạn muốn sữa?");
+        } else {
+            MsgBox.alert(this, "Vui lòng chọn hoặc tìm kiếm món bạn muốn sữa?");
             return;
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
@@ -594,21 +608,21 @@ public class frmFood extends javax.swing.JInternalFrame {
     private void btnInportEXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInportEXActionPerformed
         // TODO add your handling code here:
         xuLyNhapFileExcel();
+        EnableText(false);
+        Enable(false);
+        btnInportEX.setEnabled(true);
+
     }//GEN-LAST:event_btnInportEXActionPerformed
     private void xuLyXuatFileExcel() {
         XuLyFileExcel xuatFile = new XuLyFileExcel();
         xuatFile.xuatExcel(tbMenu);
     }
+
     private void xuLyNhapFileExcel() {
-        MyDialog dlg = new MyDialog("Dữ liệu cũ sẽ bị xoá, tiếp tục?", MyDialog.WARNING_DIALOG);
-        if (dlg.getAction() != MyDialog.OK_OPTION) {
-            return;
-        }
 
         XuLyFileExcel nhapFile = new XuLyFileExcel();
         nhapFile.nhapExcel(tbMenu);
 
-        
     }
     private void btnExPortEXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExPortEXActionPerformed
 //        xuLyXuatFileExcel();        // TODO add your handling code here:
