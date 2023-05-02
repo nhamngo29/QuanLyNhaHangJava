@@ -12,11 +12,11 @@ public class ThucDon {
 
     private String MaMon;
     private String TenMon;
-    private double GiaTien;
+    private float GiaTien;
     private String HinhAnh;
     private int Loai;
 
-    public ThucDon(String MaMon, String TenMon, double GiaTien, String HinhAnh, int Loai) {
+    public ThucDon(String MaMon, String TenMon, float GiaTien, String HinhAnh, int Loai) {
         this.MaMon = MaMon;
         this.TenMon = TenMon;
         this.GiaTien = GiaTien;
@@ -44,11 +44,11 @@ public class ThucDon {
         this.TenMon = TenMon;
     }
 
-    public double getGiaTien() {
+    public float getGiaTien() {
         return GiaTien;
     }
 
-    public void setGiaTien(double GiaTien) {
+    public void setGiaTien(float GiaTien) {
         this.GiaTien = GiaTien;
     }
 

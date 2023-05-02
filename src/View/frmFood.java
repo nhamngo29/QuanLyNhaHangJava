@@ -4,19 +4,26 @@
  */
 package View;
 
+import Custom.MyDialog;
 import Custom.MyFileChooser;
+import Custom.XuLyFileExcel;
 import DAO.LoaiThucDonDAO;
 import DAO.ThucDonDAO;
 import POJO.LoaiThucDon;
 import POJO.MyComboBox;
 import POJO.ThucDon;
 import UIS.MsgBox;
+import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -28,6 +35,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -41,37 +54,55 @@ public class frmFood extends javax.swing.JInternalFrame {
     ThucDonDAO dao;
     LoaiThucDonDAO ltdDao;
     File fileAnhSP;
-    
-    
+
+    //Clear
+    void clearForm() {
+        txtMaMon.setText("");
+        txtTenMon.setText("");
+        txtGia.setText("");
+        cboLoai.setSelectedIndex(0);
+
+    }
+
     //Thêm
-    void insert()
-    {
-        
+    void InsertOrUpdate() {
+        ThucDon td = getForm();
+
+        dao.insertOrUpdate(td);
+        fillToTable(dao.selectAll());
+        this.clearForm(); // xóa trắng form
+        luuFileAnh();
+        MsgBox.alert(this, "Thêm mới,update thành công!");
+
     }
     //Xóa
     //Sữa
-    
+
     public frmFood() {
         initComponents();
         tbMenu.getColumnModel().getColumn(4).setWidth(0);
         tbMenu.getColumnModel().getColumn(4).setMinWidth(0);
         tbMenu.getColumnModel().getColumn(4).setMaxWidth(0);
+        Enable(true);
+        EnableText(false);
         dao = new ThucDonDAO();
         ltdDao = new LoaiThucDonDAO();
         fillToTable(dao.selectAll());
         loadToCbo();
         selectTable();
     }
+
     ThucDon getForm() {
         ThucDon td = new ThucDon();
         td.setMaMon(txtMaMon.getText());
         td.setTenMon(txtTenMon.getText());
         td.setGiaTien(Float.parseFloat(txtGia.getText()));
-        LoaiThucDon a=(LoaiThucDon) cboLoai.getSelectedItem();
+        LoaiThucDon a = (LoaiThucDon) cboLoai.getSelectedItem();
         td.setLoai(a.getMaLoaiTD());
         td.setHinhAnh(String.valueOf(fileAnhSP.getName()));
         return td;
     }
+
     private ImageIcon getAnhSP(String src) {
         src = src.trim().equals("") ? "default.png" : src;
         //Xử lý ảnh
@@ -103,11 +134,18 @@ public class frmFood extends javax.swing.JInternalFrame {
         try {
             File initialImage = new File(fileAnhSP.getPath());
             bImage = ImageIO.read(initialImage);
-
-            ImageIO.write(bImage, "png", new File("image/SanPham/" + fileAnhSP.getName()));
-
+            ImageIO.write(bImage, "png", new File("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\" + fileAnhSP.getName()));
         } catch (IOException e) {
             System.out.println("Exception occured :" + e.getMessage());
+        }
+    }
+    private void OpenFile(String file)
+    {
+        try {
+            File path=new File(file);
+            getDesktop().open(path);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -144,6 +182,15 @@ public class frmFood extends javax.swing.JInternalFrame {
         }
     }
 
+    void Enable(Boolean s) {
+        btnInsert.setEnabled(s);
+        btnUpdate.setEnabled(s);
+        btnRemove.setEnabled(s);
+        btnSave.setEnabled(!s);
+        btnExPortEX.setEnabled(s);
+        btnInportEX.setEnabled(s);
+    }
+
     private ImageIcon loadImage(String tenHinh) {
 
         ImageIcon ii = new ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\" + tenHinh);
@@ -154,16 +201,10 @@ public class frmFood extends javax.swing.JInternalFrame {
         if (txtMaMon.getText().isEmpty() || txtMaMon.getText().equalsIgnoreCase("")) {
             MsgBox.alert(this, "Bạn chưa nhập mã món ăn!");
             return false;
-        } else if (txtMaMon.getText().length() > 3) {
-            MsgBox.alert(this, "Mã món ăn tối đa chỉ 3 ký tự!");
+        } else if (txtMaMon.getText().length() > 6) {
+            MsgBox.alert(this, "Mã món ăn tối đa chỉ 6 ký tự!");
             return false;
         }
-
-        if (dao.selectById(txtMaMon.getText()) != null) {
-            MsgBox.alert(this, "Mã Món Ăn Này Đã Tồn Tại");
-            return false;
-        }
-
         if (txtTenMon.getText().isEmpty() || txtTenMon.getText().equalsIgnoreCase("")) {
             MsgBox.alert(this, "Bạn chưa nhập tên món ăn!");
             return false;
@@ -192,17 +233,21 @@ public class frmFood extends javax.swing.JInternalFrame {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 int row = tbMenu.getSelectedRow();
-                txtMaMon.setText((String) tbMenu.getValueAt(row, 0));
-                txtTenMon.setText((String) tbMenu.getValueAt(row, 1));
-                txtGia.setText(String.valueOf(tbMenu.getValueAt(row, 2)));
-                LoaiThucDon a = (LoaiThucDon) tbMenu.getValueAt(row, 3);
+                if(row>=0)
+                {
+                    txtMaMon.setText((String) tbMenu.getValueAt(row, 0));
+                    txtTenMon.setText((String) tbMenu.getValueAt(row, 1));
+                    txtGia.setText(String.valueOf(tbMenu.getValueAt(row, 2)));
+                    LoaiThucDon a = (LoaiThucDon) tbMenu.getValueAt(row, 3);
 
-                int width = 130; // chiều rộng mong muốn của JLabel
-                int height = 117; // chiều cao mong muốn của JLabel
-                Image img = loadImage(String.valueOf(tbMenu.getValueAt(row, 4))).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                txtImg.setIcon(new ImageIcon(img));
-                cboLoai.setSelectedItem(a);
-                cboLoai.setSelectedIndex(a.getMaLoaiTD() - 1);
+                    int width = 130; // chiều rộng mong muốn của JLabel
+                    int height = 117; // chiều cao mong muốn của JLabel
+                    Image img = loadImage(String.valueOf(tbMenu.getValueAt(row, 4))).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                    fileAnhSP = new File("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\" + String.valueOf(tbMenu.getValueAt(row, 4)));
+                    txtImg.setIcon(new ImageIcon(img));
+                    cboLoai.setSelectedItem(a);
+                    cboLoai.setSelectedIndex(a.getMaLoaiTD() - 1);
+                }
             }
         });
     }
@@ -238,6 +283,7 @@ public class frmFood extends javax.swing.JInternalFrame {
         btnUpdate = new javax.swing.JButton();
         btnInportEX = new javax.swing.JButton();
         btnExPortEX = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Quản lý sản phẩm");
@@ -324,39 +370,69 @@ public class frmFood extends javax.swing.JInternalFrame {
         btnRemove.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-cancel-20.png")); // NOI18N
         btnRemove.setText("Xóa");
         btnRemove.setPreferredSize(new java.awt.Dimension(84, 27));
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-edit-20.png")); // NOI18N
         btnUpdate.setText("Sửa");
         btnUpdate.setPreferredSize(new java.awt.Dimension(84, 27));
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnInportEX.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-import-csv-20.png")); // NOI18N
         btnInportEX.setText("Nhập");
         btnInportEX.setPreferredSize(new java.awt.Dimension(84, 27));
+        btnInportEX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInportEXActionPerformed(evt);
+            }
+        });
 
         btnExPortEX.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-export-csv-20.png")); // NOI18N
         btnExPortEX.setText("Xuất");
+        btnExPortEX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExPortEXActionPerformed(evt);
+            }
+        });
+
+        btnSave.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-save-20.png")); // NOI18N
+        btnSave.setText("Lưu");
+        btnSave.setPreferredSize(new java.awt.Dimension(84, 27));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(103, 103, 103)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnInsert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(51, 51, 51)
-                        .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(62, 62, 62)
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(57, 57, 57)
-                        .addComponent(btnInportEX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(55, 55, 55)
-                        .addComponent(btnExPortEX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(151, 151, 151))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17)
+                                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(22, 22, 22)
+                                .addComponent(btnInportEX, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(btnExPortEX, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(357, 357, 357)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -394,7 +470,7 @@ public class frmFood extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(198, 198, 198)
                                 .addComponent(btnChooseImage)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(151, 151, 151))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,7 +511,8 @@ public class frmFood extends javax.swing.JInternalFrame {
                     .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInportEX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExPortEX))
+                    .addComponent(btnExPortEX)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
                 .addGap(29, 29, 29))
@@ -456,13 +533,124 @@ public class frmFood extends javax.swing.JInternalFrame {
 //        
 //    }
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        // TODO add your handling code here:
+        clearForm();
+        Enable(false);
+        EnableText(true);
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
         // TODO add your handling code here:
         xuLyChonAnh();
     }//GEN-LAST:event_btnChooseImageActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if (!checkVal()) {
+            return;
+        }
+        InsertOrUpdate();
+        Enable(true);
+    }//GEN-LAST:event_btnSaveActionPerformed
+    void EnableText(Boolean s)
+    {
+        txtMaMon.setEditable(s);
+        txtGia.setEditable(s);
+        txtTenMon.setEditable(s);
+        txtGia.setEditable(s);
+        btnChooseImage.setEnabled(s);
+    }
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if(txtMaMon.getText().isEmpty())
+        {
+            MsgBox.alert(this, "Vui lòng chọn hoặc tìm kiếm món bạn muốn sữa?");
+            return;
+        }
+        else
+        {
+             Enable(false);
+             EnableText(true);
+             txtMaMon.setEnabled(false);
+        }
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        // TODO add your handling code here:
+        if(!txtMaMon.getText().isEmpty())
+        {
+            if(MsgBox.confirm(this, "Bạn có chắc chắn muốn xóa món "+txtTenMon.getText()+" ra khỏi thức đơn không?"))
+            {
+                dao.delete(txtMaMon.getText());
+                fillToTable(dao.selectAll());
+                this.clearForm(); // xóa trắng form
+            }
+        }
+        else
+        {
+             MsgBox.alert(this, "Vui lòng chọn hoặc tìm kiếm món bạn muốn sữa?");
+            return;
+        }
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btnInportEXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInportEXActionPerformed
+        // TODO add your handling code here:
+        xuLyNhapFileExcel();
+    }//GEN-LAST:event_btnInportEXActionPerformed
+    private void xuLyXuatFileExcel() {
+        XuLyFileExcel xuatFile = new XuLyFileExcel();
+        xuatFile.xuatExcel(tbMenu);
+    }
+    private void xuLyNhapFileExcel() {
+        MyDialog dlg = new MyDialog("Dữ liệu cũ sẽ bị xoá, tiếp tục?", MyDialog.WARNING_DIALOG);
+        if (dlg.getAction() != MyDialog.OK_OPTION) {
+            return;
+        }
+
+        XuLyFileExcel nhapFile = new XuLyFileExcel();
+        nhapFile.nhapExcel(tbMenu);
+
+        
+    }
+    private void btnExPortEXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExPortEXActionPerformed
+//        xuLyXuatFileExcel();        // TODO add your handling code here:
+//        try {
+//            JFileChooser jFileChooser=new JFileChooser();
+//            jFileChooser.showSaveDialog(this);
+//            File saveFile=jFileChooser.getSelectedFile();
+//            if(saveFile!=null)
+//            {
+//                saveFile=new File(saveFile.toString()+".xlsx");
+//                Workbook wb = new XSSFWorkbook();
+//                Sheet sheet=wb.createSheet("Thực đơn");
+//                Row rowCol=sheet.createRow(0);
+//                for (int i = 0; i < tbMenu.getColumnCount(); i++) {
+//                    Cell cell=rowCol.createCell(i);
+//                    cell.setCellValue(tbMenu.getColumnName(i));
+//                }
+//                for(int i=0;i<tbMenu.getRowCount();i++)
+//                {
+//                    Row row=sheet.createRow(i+1);
+//                    for (int j = 0; j < tbMenu.getColumnCount(); j++) {
+//                        Cell cell=row.createCell(j);
+//                        if(tbMenu.getValueAt(i, j)!=null)
+//                        {
+//                            cell.setCellValue(tbMenu.getValueAt(i, j).toString());
+//                        }
+//                    }
+//                }
+//                FileOutputStream out=new FileOutputStream(new File(saveFile.toString()));
+//                wb.write(out);
+//                wb.close();
+//                out.close();
+//                OpenFile(saveFile.toString());
+//            }
+//            else
+//            {
+//                MsgBox.alert(this, "Error");
+//            }
+//        } catch (FileNotFoundException e) {
+//        }catch(IOException ex){}
+        xuLyXuatFileExcel();
+    }//GEN-LAST:event_btnExPortEXActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -471,6 +659,7 @@ public class frmFood extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnInportEX;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cboLoai;

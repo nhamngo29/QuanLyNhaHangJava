@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import POJO.ThucDon;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -56,6 +57,7 @@ public class DataProvider {
 //     * @throws java.sql.SQLException lỗi sai cú pháp
 //     */
     public static PreparedStatement getStmt(String sql, Object... args) throws SQLException {
+        
         Connection connection = getConnection();
         PreparedStatement pstmt = null;
         if (sql.trim().startsWith("{")) {
@@ -64,7 +66,8 @@ public class DataProvider {
             pstmt = connection.prepareStatement(sql);
         }
         for (int i = 0; i < args.length; i++) {
-            pstmt.setObject(i + 1, args[i]);
+            
+            pstmt.setObject(i+1, args[i]);
         }
         return pstmt;
     }
@@ -125,5 +128,13 @@ public class DataProvider {
     public static void main(String[] args) {
         Connection conn=null;
         conn=getConnection();
+        ThucDon entity=new ThucDon();
+        entity.setHinhAnh("aa");
+            entity.setLoai(1);
+            entity.setGiaTien(0f);
+            entity.setMaMon("TD001");
+            entity.setTenMon("Cc");
+            String INSERT_OR_UPDATE_SQL = "{CALL SP_InsertOrUpdateThucDon(?,?,?,?,?)}";
+            update(INSERT_OR_UPDATE_SQL,entity.getMaMon(),entity.getTenMon(),entity.getGiaTien(),entity.getHinhAnh(),entity.getLoai());
     }
 }

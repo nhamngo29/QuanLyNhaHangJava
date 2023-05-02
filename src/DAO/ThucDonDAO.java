@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import static DAO.DataProvider.update;
 import POJO.LoaiThucDon;
 import POJO.NhanVien;
 import POJO.ThucDon;
@@ -25,6 +26,7 @@ public class ThucDonDAO extends NhaHangDAO<ThucDon, String> {
     {
         List<ThucDon> list = this.selectBySql(FIND_BY_SQL, ten);
         if (list.isEmpty()) {
+            
             return null;
         }
         return list;
@@ -53,6 +55,7 @@ public class ThucDonDAO extends NhaHangDAO<ThucDon, String> {
             return null;
         }
         return list.get(0);
+        
     }
     @Override
     public List<ThucDon> selectAll() {
@@ -83,7 +86,7 @@ public class ThucDonDAO extends NhaHangDAO<ThucDon, String> {
     @Override
     public void insertOrUpdate(ThucDon entity) {
         try {
-            DataProvider.update(INSERT_OR_UPDATE_SQL, entity);
+            DataProvider.update(INSERT_OR_UPDATE_SQL,entity.getMaMon(),entity.getTenMon(),entity.getGiaTien(),entity.getHinhAnh(),entity.getLoai());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
