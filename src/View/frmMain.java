@@ -24,7 +24,7 @@ public class frmMain extends javax.swing.JFrame {
     public frmMain() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
 //        if(Auth.isManager())
 //        {
 //            btnQuanLy.setVisible(true);
@@ -87,6 +87,11 @@ public class frmMain extends javax.swing.JFrame {
         saveMenuItem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-port-20.png")); // NOI18N
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Nhập xuất kho");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuItemActionPerformed(evt);
+            }
+        });
         btnQuanLy.add(saveMenuItem);
 
         saveAsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -119,6 +124,11 @@ public class frmMain extends javax.swing.JFrame {
 
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Thông tin tài khoản");
+        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cutMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(cutMenuItem);
 
         copyMenuItem.setMnemonic('y');
@@ -171,20 +181,35 @@ public class frmMain extends javax.swing.JFrame {
         frmFood frm = new frmFood();
         frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100,100));
+        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_menuItemQLFoodActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       desktopPane.removeAll();
-       frmNhanVien frm=new frmNhanVien();
-       frm.pack();
+        desktopPane.removeAll();
+        frmNhanVien frm = new frmNhanVien();
+        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100,100));
+        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        frmQuanLyHangHoa frm = new frmQuanLyHangHoa();
+        frm.pack();
+        frm.setMaximizable(true);
+        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cutMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
