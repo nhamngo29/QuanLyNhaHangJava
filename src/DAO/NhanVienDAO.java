@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Custom.MD5;
 import POJO.NhanVien;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -13,22 +14,29 @@ import java.util.List;
  *
  * @author Nham Ngo
  */
-public class NhanVienDAO extends NhaHangDAO<NhanVien, Integer>{
+public class NhanVienDAO extends NhaHangDAO<NhanVien, String>{
     String INSERT_OR_UPDATE_SQL = "{Call SP_InsertOrUpdateNhanVien(?,?,?,?,?,?,?)}";
-    
     String DELETE_SQL = "DELETE FROM NHANVIEN WHERE MaNV =?";
     String SELECT_ALL_SQL = "SELECT * FROM NHANVIEN";
     String SELETE_BY_ID_SQL = "SELECT * FROM NHANVIEN WHERE MaNV =?";
     String SP_LOGIN="{CALL SP_Login(?,?)}";
-    
-    
+    String FIND_BY_SQL="{CALL SP_FindNhanVien(?)}";
+    public List<NhanVien> FIND_NhanVien(String ten)
+    {
+        List<NhanVien> list = this.selectBySql(FIND_BY_SQL, ten);
+        if (list.isEmpty()) {
+            
+            return null;
+        }
+        return list;
+    }
     @Override
     public List<NhanVien> selectAll() {
         return this.selectBySql(SELECT_ALL_SQL);
     }
     public NhanVien Login(String MNV,String Password)
     {
-         List<NhanVien> lnd=selectBySql(SP_LOGIN, MNV,Password);
+         List<NhanVien> lnd=selectBySql(SP_LOGIN, MNV,MD5.getMd5(Password));//Password đã được mã hóa
         if(lnd.size()==0)
         {
             return null;
@@ -49,7 +57,9 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, Integer>{
                 enity.setChucVu(rs.getString("ChucVu"));
                 enity.setGioiTinh(rs.getBoolean("GioiTinh"));
                 enity.setAvatar(rs.getString("Avatar"));
+                enity.setActive(rs.getBoolean("Active"));
                 list.add(enity);
+                System.out.println("Chức danh "+enity.getChucVu());
             }
             rs.getStatement().getConnection().close();
             return list;
@@ -79,7 +89,7 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, Integer>{
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(String id) {
         try {
             DataProvider.update(DELETE_SQL, id);
         } catch (Exception ex) {
@@ -88,7 +98,7 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, Integer>{
     }
 
     @Override
-    public NhanVien selectById(Integer id) {
+    public NhanVien selectById(String id) {
         List<NhanVien> list = this.selectBySql(SELETE_BY_ID_SQL, id);
         if (list.isEmpty()) {
             return null;
@@ -99,7 +109,7 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, Integer>{
     @Override
     public void insertOrUpdate(NhanVien entity) {
         try {
-            DataProvider.update(INSERT_OR_UPDATE_SQL, entity);
+            DataProvider.update(INSERT_OR_UPDATE_SQL, entity.getMaNV(),entity.getHoTen(),entity.getSoDT(),entity.getChucVu(),entity.isGioiTinh(),entity.getAvatar(),entity.isActive());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

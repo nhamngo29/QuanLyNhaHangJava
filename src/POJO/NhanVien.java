@@ -16,7 +16,37 @@ public class NhanVien {
     String ChucVu;
     boolean GioiTinh;
     String Avatar;
+    boolean Active;
 
+    public NhanVien(String MaNV, String HoTen, String SoDT, String ChucVu, boolean GioiTinh, String Avatar, boolean Active) {
+        this.MaNV = MaNV;
+        this.HoTen = HoTen;
+        this.SoDT = SoDT;
+        this.ChucVu = ChucVu;
+        this.GioiTinh = GioiTinh;
+        this.Avatar = Avatar;
+        this.Active = Active;
+    }
+
+    public boolean isActive() {
+        return Active;
+    }
+
+    public void setActive(boolean Active) {
+        this.Active = Active;
+    }
+
+    public NhanVien(String MaNV, String MatKhau, String HoTen, String SoDT, String ChucVu, boolean GioiTinh, String Avatar, boolean Active) {
+        this.MaNV = MaNV;
+        this.MatKhau = MatKhau;
+        this.HoTen = HoTen;
+        this.SoDT = SoDT;
+        this.ChucVu = ChucVu;
+        this.GioiTinh = GioiTinh;
+        this.Avatar = Avatar;
+        this.Active = Active;
+    }
+    
     public NhanVien(String MaNV, String MatKhau, String HoTen, String SoDT, String ChucVu, boolean GioiTinh, String Avatar) {
         this.MaNV = MaNV;
         this.MatKhau = MatKhau;

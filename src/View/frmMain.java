@@ -48,6 +48,9 @@ public class frmMain extends javax.swing.JFrame {
         menuItemQLFood = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -60,6 +63,7 @@ public class frmMain extends javax.swing.JFrame {
 
         desktopPane.setPreferredSize(new java.awt.Dimension(1154, 623));
 
+        btnQuanLy.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-manager-20.png")); // NOI18N
         btnQuanLy.setMnemonic('f');
         btnQuanLy.setText("Quản lý");
 
@@ -90,6 +94,23 @@ public class frmMain extends javax.swing.JFrame {
         saveAsMenuItem.setMnemonic('a');
         saveAsMenuItem.setText("Hóa đơn");
         btnQuanLy.add(saveAsMenuItem);
+
+        jMenu1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-staff-20.png")); // NOI18N
+        jMenu1.setText("Nhân Viên");
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-statistics-20.png")); // NOI18N
+        jMenuItem1.setText("Thông kê");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Quản lý");
+        jMenu1.add(jMenuItem2);
+
+        btnQuanLy.add(jMenu1);
 
         menuBar.add(btnQuanLy);
 
@@ -129,7 +150,7 @@ public class frmMain extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
         );
 
         pack();
@@ -154,6 +175,16 @@ public class frmMain extends javax.swing.JFrame {
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_menuItemQLFoodActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       desktopPane.removeAll();
+       frmNhanVien frm=new frmNhanVien();
+       frm.pack();
+        frm.setMaximizable(true);
+        frm.getContentPane().setPreferredSize(new Dimension(100,100));
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,6 +230,9 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuItemQLFood;
     private javax.swing.JMenuItem saveAsMenuItem;
