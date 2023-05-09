@@ -15,11 +15,11 @@ public class KhoHang {
     String TenHangHoa;
     Date NgayNhap;
     String DonVi;
-    double SoLuong;
+    int SoLuong;
     double ChiPhi;
     double TongChiPhi;
 
-    public KhoHang(String MaHangHoa, String TenHangHoa, Date NgayNhap, String DonVi, double SoLuong, double ChiPhi, double TongChiPhi) {
+    public KhoHang(String MaHangHoa, String TenHangHoa, Date NgayNhap, String DonVi, int SoLuong, double ChiPhi, double TongChiPhi) {
         this.MaHangHoa = MaHangHoa;
         this.TenHangHoa = TenHangHoa;
         this.NgayNhap = NgayNhap;
@@ -64,11 +64,11 @@ public class KhoHang {
         this.DonVi = DonVi;
     }
 
-    public double getSoLuong() {
+    public int getSoLuong() {
         return SoLuong;
     }
 
-    public void setSoLuong(double SoLuong) {
+    public void setSoLuong(int SoLuong) {
         this.SoLuong = SoLuong;
     }
 

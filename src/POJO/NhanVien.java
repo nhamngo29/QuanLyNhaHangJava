@@ -28,6 +28,11 @@ public class NhanVien {
         this.Active = Active;
     }
 
+    @Override
+    public String toString() {
+        return HoTen;
+    }
+
     public boolean isActive() {
         return Active;
     }

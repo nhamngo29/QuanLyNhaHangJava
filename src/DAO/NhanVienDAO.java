@@ -5,7 +5,9 @@
 package DAO;
 
 import Custom.MD5;
+import Custom.MyDialog;
 import POJO.NhanVien;
+import UIS.MsgBox;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, String>{
     String DELETE_SQL = "DELETE FROM NHANVIEN WHERE MaNV =?";
     String SELECT_ALL_SQL = "SELECT * FROM NHANVIEN";
     String SELETE_BY_ID_SQL = "SELECT * FROM NHANVIEN WHERE MaNV =?";
+    String RESERT_PASSWORD="UPDATE NhanVien SET Password='c4ca4238a0b923820dcc509a6f75849b' WHERE MaNV=?";
     String SP_LOGIN="{CALL SP_Login(?,?)}";
     String FIND_BY_SQL="{CALL SP_FindNhanVien(?)}";
     public List<NhanVien> FIND_NhanVien(String ten)
@@ -42,6 +45,14 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, String>{
             return null;
         }
         return lnd.get(0);
+    }
+    public void ResertPass(String MNV)
+    {
+        try {
+            DataProvider.update(RESERT_PASSWORD, MNV);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     @Override
     protected List<NhanVien> selectBySql(String sql, Object... args) {

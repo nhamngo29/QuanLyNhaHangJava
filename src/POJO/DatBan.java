@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class DatBan {
 
-    String MaDatBan;
+    int MaDatBan;
     String HoTenKH;
     String SDTKH;
     Date NgayDatBan;
@@ -21,7 +21,7 @@ public class DatBan {
     String GhiChu;
     String MaNV;
 
-    public DatBan(String MaDatBan, String HoTenKH, String SDTKH, Date NgayDatBan, String GioDat, int SoNguoi, String GhiChu, String MaNV) {
+    public DatBan(int MaDatBan, String HoTenKH, String SDTKH, Date NgayDatBan, String GioDat, int SoNguoi, String GhiChu, String MaNV) {
         this.MaDatBan = MaDatBan;
         this.HoTenKH = HoTenKH;
         this.SDTKH = SDTKH;
@@ -35,11 +35,11 @@ public class DatBan {
     public DatBan() {
     }
 
-    public String getMaDatBan() {
+    public int getMaDatBan() {
         return MaDatBan;
     }
 
-    public void setMaDatBan(String MaDatBan) {
+    public void setMaDatBan(int MaDatBan) {
         this.MaDatBan = MaDatBan;
     }
 

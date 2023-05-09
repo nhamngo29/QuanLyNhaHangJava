@@ -4,6 +4,9 @@
  */
 package View;
 
+import View.QuanLy.frmQLThucDon;
+import View.QuanLy.frmQLNhanVien;
+import View.QuanLy.frmQLHangHoa;
 import POJO.NhanVien;
 import UIS.Auth;
 import java.awt.BorderLayout;
@@ -57,6 +60,7 @@ public class frmMain extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(56, 13));
@@ -150,6 +154,14 @@ public class frmMain extends javax.swing.JFrame {
 
         menuBar.add(helpMenu);
 
+        jMenu2.setText("Đặt bàn");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        menuBar.add(jMenu2);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,7 +179,7 @@ public class frmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemQLFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuItemQLFoodMouseClicked
-        frmFood frm = new frmFood();
+        frmQLThucDon frm = new frmQLThucDon();
         frm.setVisible(true);
         frm.setBounds(50, 50, 500, 400);
         frm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -178,7 +190,7 @@ public class frmMain extends javax.swing.JFrame {
     private void menuItemQLFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemQLFoodActionPerformed
         // TODO add your handling code here:
         desktopPane.removeAll();
-        frmFood frm = new frmFood();
+        frmQLThucDon frm = new frmQLThucDon();
         frm.pack();
         frm.setMaximizable(true);
         frm.getContentPane().setPreferredSize(new Dimension(100, 100));
@@ -188,7 +200,7 @@ public class frmMain extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         desktopPane.removeAll();
-        frmNhanVien frm = new frmNhanVien();
+        frmQLNhanVien frm = new frmQLNhanVien();
         frm.pack();
         frm.setMaximizable(true);
         frm.getContentPane().setPreferredSize(new Dimension(100, 100));
@@ -199,7 +211,7 @@ public class frmMain extends javax.swing.JFrame {
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         // TODO add your handling code here:
         desktopPane.removeAll();
-        frmQuanLyHangHoa frm = new frmQuanLyHangHoa();
+        frmQLHangHoa frm = new frmQLHangHoa();
         frm.pack();
         frm.setMaximizable(true);
         frm.getContentPane().setPreferredSize(new Dimension(100, 100));
@@ -209,7 +221,19 @@ public class frmMain extends javax.swing.JFrame {
 
     private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_cutMenuItemActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // TODO add your handling code here
+        desktopPane.removeAll();
+        frmDatBan frm = new frmDatBan();
+        frm.pack();
+        frm.setMaximizable(true);
+        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_jMenu2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -256,6 +280,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
