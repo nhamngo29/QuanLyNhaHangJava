@@ -206,6 +206,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
         btnExportEx = new javax.swing.JButton();
+        btnExportEx1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtTenHH = new javax.swing.JTextField();
@@ -298,6 +299,14 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
             }
         });
 
+        btnExportEx1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-export-csv-20.png")); // NOI18N
+        btnExportEx1.setText("Xuất hàng hóa");
+        btnExportEx1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportEx1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -314,7 +323,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
                         .addComponent(btnSearch)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnExportEx1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnExportEx, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -328,8 +338,10 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
                     .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnExportEx, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnExportEx1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExportEx, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -622,9 +634,19 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
             txtTongTien.setText((Integer.parseInt((txtSL.getText().toString()))*Double.parseDouble(txtChiPhi.getText().toString()))+"");
     }//GEN-LAST:event_txtChiPhiKeyReleased
 
+    private void btnExportEx1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportEx1ActionPerformed
+        // TODO add your handling code here:
+        if(!checkVal())
+            return;
+        Dlg_XuatHangHoa xuatHangHoa=new Dlg_XuatHangHoa(getForm());
+        xuatHangHoa.setVisible(true);
+        
+    }//GEN-LAST:event_btnExportEx1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportEx;
+    private javax.swing.JButton btnExportEx1;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;

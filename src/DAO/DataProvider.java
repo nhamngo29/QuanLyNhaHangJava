@@ -128,13 +128,6 @@ public class DataProvider {
     public static void main(String[] args) {
         Connection conn=null;
         conn=getConnection();
-        ThucDon entity=new ThucDon();
-        entity.setHinhAnh("aa");
-            entity.setLoai(1);
-            entity.setGiaTien(0f);
-            entity.setMaMon("TD001");
-            entity.setTenMon("Cc");
-            String INSERT_OR_UPDATE_SQL = "{CALL SP_InsertOrUpdateThucDon(?,?,?,?,?)}";
-            update(INSERT_OR_UPDATE_SQL,entity.getMaMon(),entity.getTenMon(),entity.getGiaTien(),entity.getHinhAnh(),entity.getLoai());
+        
     }
 }
