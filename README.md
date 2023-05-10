@@ -1,6 +1,6 @@
-QUẢN LÝ NHÀ HÀNG
-Language:Java
-Database:SQL Saver
+#QUẢN LÝ NHÀ HÀNG
+<p>Language:Java</p>
+<p>Database:SQL Saver</p>
 <hr/>
 <p>Member<p> 
 <ul>
