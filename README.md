@@ -37,6 +37,12 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
   - Nguyên liệu
   - Danh sách Món ăn
 > Yêu cầu về bảo mật
+  - Phần mềm được viết cho 2 đối tượng sử dụng là **Nhân viên, Quản lý** với yêu cầu bảo mật như sau: 
+  - **Nhân viên** và **Quản lý** phải đăng nhập mới được sử dụng phần mềm
+  - **Nhân viên** sẽ được phân thành **Phục vụ** và **Thu ngân**
+  - Chức năng **Khóa** sổ sẽ yêu cầu nhập Pass của **Thu ngân** để hoạt động
+  - Ngoại trừ chức năng **Khóa sổ** thì **Quản lý** sẽ sử dụng được tất cả các chức năng kèm thêm các chức năng quản lý: **DS Nhân viên, Chấm công, Doanh thu tháng/ngày, Xếp lịch, Thêm món mới, Xem / Chỉnh sửa hàng hóa**
+  - Tại phần Thanh toán, **Nhân viên** có thể nhập mã Thành viên để hóa đơn được giảm giá, mức giảm sẽ tính theo số liệu mà nhà hàng đưa ra.
 ## III. Tổng kết
 <a name="TongKet"></a>
 - Tự đánh giá việc triển khai bài tập nhóm, tự nhận xét kết quả đạt được:
