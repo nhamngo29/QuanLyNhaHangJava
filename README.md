@@ -36,7 +36,7 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
   - Hàng hóa
   - Nguyên liệu
   - Danh sách Món ăn
- **Yêu cầu về bảo mật**
+  Yêu cầu về bảo mật
 ## III. Tổng kết
 <a name="TongKet"></a>
 - Tự đánh giá việc triển khai bài tập nhóm, tự nhận xét kết quả đạt được:
