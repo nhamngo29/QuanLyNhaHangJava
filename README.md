@@ -181,6 +181,20 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 | ChiPhi  | FLOAT | NOT NULL | Chi Phí |
 | TongChiPhi  | FLOAT | NOT NULL | Tổng chi phí |
 
+### 2.3	THIẾT KẾ GIAO DIỆN (MOCKUP)
+#### 2.3.1	Sơ đồ tổ chức giao diện
+Giao diện chính là một cửa sổ chứa menu chính và toolbar. Thông qua đó để đi đến các giao diện thành viên để thực hiện các chức năng trong hệ thống.
+Theo yêu cầu thì mọi nhân viên phải đăng nhập trước khi sử dụng ứng dụng nên form đăng nhập xuất hiện trước để yêu cầu đăng nhập.
+Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một màn hình chào cùng với thanh tiến trình để người có cảm giác ứng dụng đang khởi động.
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/44b39c9f-426c-4d60-860a-bda666805e35)
+### 2.3.2	Giao diện mockup:
+- Login
+- Menu và bàn
+- Quản lý doanh thu
+- Quản lý bàn
+- Thông tin tài khoản
+- Đổi mật khẩu
+## III	KIỂM THỬ
 ## III. Tổng kết
 <a name="TongKet"></a>
 - Tự đánh giá việc triển khai bài tập nhóm, tự nhận xét kết quả đạt được:
