@@ -10,7 +10,7 @@
 </ul>
 
 ### Mục lục
-[I. PHÂN TÍCH](#Modau)
+[I. PHÂN TÍCH](#PhanTich)
 
 - [1.1 HIỆN TRẠNG-KHẢO SÁT](#HienTrangKhaoSat)
 - [1.2 YÊU CẦU HỆ THỐNG CẦN LÀM](#YeuCauHeThongCanLam)
