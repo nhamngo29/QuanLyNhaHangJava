@@ -18,6 +18,8 @@ import UIS.MsgBox;
 import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,6 +39,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -87,24 +91,42 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         tb.getColumnModel().getColumn(6).setMaxWidth(0);
         cboChucVu.setRenderer(new MyComboBoxRenderer("Vui lòng chọn chức vụ"));
         cboChucVu.setSelectedIndex(-1);
+        order();
         Enable(true);
         EnableText(false);
         dao = new NhanVienDAO();
         ltdDao = new LoaiThucDonDAO();
         fillToTable(dao.selectAll());
+        order();
         selectTable();
     }
 
     NhanVien getForm() {
-        NhanVien td = new NhanVien();
-        td.setMaNV(txtMaNV.getText());
-        td.setHoTen(txtTenNV.getText());
-        td.setSoDT(txtSDT.getText());
-        td.setGioiTinh(rbName.isSelected());
-        td.setActive(cbActive.isSelected());
-        td.setAvatar(String.valueOf(fileAnhSP.getName()));
-        td.setChucVu(cboChucVu.getSelectedItem().toString());
-        return td;
+        try {
+            NhanVien td = new NhanVien();
+            td.setMaNV(txtMaNV.getText());
+            td.setHoTen(txtTenNV.getText());
+            td.setSoDT(txtSDT.getText());
+            td.setGioiTinh(rbName.isSelected());
+            td.setActive(cbActive.isSelected());
+            td.setAvatar(String.valueOf(fileAnhSP.getName()));
+            td.setChucVu(cboChucVu.getSelectedItem().toString());
+            return td;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    void order() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tb.getModel());
+        tb.setRowSorter(sorter);
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = tb.columnAtPoint(e.getPoint());
+                sorter.toggleSortOrder(column);
+                sorter.sort();
+            }
+        });
     }
 
     private ImageIcon getAnhSP(String src) {
@@ -183,7 +205,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         btnInportEX.setEnabled(s);
         btnResertPass.setEnabled(s);
         btnPhanQuyen.setEnabled(s);
-        
+
     }
 
     private ImageIcon loadImage(String tenHinh) {
@@ -226,6 +248,8 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         }
         return true;
     }
+
+    
 
     void selectTable() {
         tb.setCellSelectionEnabled(true);
@@ -627,12 +651,12 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
             int row = tb.getRowCount();
             for (int i = 0; i < row; i++) {
                 String maNV = tb.getValueAt(i, 0).toString();
-                String tenNV = tb.getValueAt(i,1).toString();
-                String SDT = tb.getValueAt(i,2).toString();
-                String ChucVu=tb.getValueAt(i, 3).toString();
+                String tenNV = tb.getValueAt(i, 1).toString();
+                String SDT = tb.getValueAt(i, 2).toString();
+                String ChucVu = tb.getValueAt(i, 3).toString();
                 Boolean GioiTinh = (String.valueOf(tb.getValueAt(i, 4)) == "Nam") ? true : false;
-                Boolean Active=((Boolean) tb.getValueAt(i, 5)).booleanValue();
-                NhanVien a=new NhanVien(maNV, tenNV, SDT, ChucVu, GioiTinh, fileAnhSP.getName(), Active);
+                Boolean Active = ((Boolean) tb.getValueAt(i, 5)).booleanValue();
+                NhanVien a = new NhanVien(maNV, tenNV, SDT, ChucVu, GioiTinh, fileAnhSP.getName(), Active);
                 if (a != null) {
                     dao.insertOrUpdate(a);
                 }
@@ -643,7 +667,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
                 return;
             } else {
                 InsertOrUpdate();
-                
+
             }
         }
         Enable(true);
@@ -673,7 +697,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-         
+
         if (!txtMaNV.getText().isEmpty()) {
             if (MsgBox.confirm(this, "Bạn có chắc chắn muốn xóa nhân viên " + txtTenNV.getText() + " ra khỏi danh sách không?")) {
                 dao.delete(txtMaNV.getText());
@@ -748,13 +772,13 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExPortEXActionPerformed
 
     private void btnResertPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResertPassActionPerformed
-        if(!checkVal())
+        if (!checkVal()) {
             return;// TODO add your handling code here:
-        if(MsgBox.confirm(this, "Bạn có chắc chắn muốn đặt lại mật khẩu cho user "+txtTenNV.getText()+" không?"))
-        {
-             dao.ResertPass (txtMaNV.getText());
-             MyDialog dlg = new MyDialog("Đã đặt mật khẩu!", MyDialog.SUCCESS_DIALOG);
-             
+        }
+        if (MsgBox.confirm(this, "Bạn có chắc chắn muốn đặt lại mật khẩu cho user " + txtTenNV.getText() + " không?")) {
+            dao.ResertPass(txtMaNV.getText());
+            MyDialog dlg = new MyDialog("Đã đặt mật khẩu!", MyDialog.SUCCESS_DIALOG);
+
         }
     }//GEN-LAST:event_btnResertPassActionPerformed
 

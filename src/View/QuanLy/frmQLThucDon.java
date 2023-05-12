@@ -16,6 +16,8 @@ import UIS.MsgBox;
 import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +37,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -63,6 +67,18 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
         cboLoai.setSelectedIndex(0);
 
     }
+    void order() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tb.getModel());
+        tb.setRowSorter(sorter);
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = tb.columnAtPoint(e.getPoint());
+                sorter.toggleSortOrder(column);
+                sorter.sort();
+            }
+        });
+    }
+
 
     //Thêm
     void InsertOrUpdate() {
@@ -80,12 +96,13 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
 
     public frmQLThucDon() {
         initComponents();
-        tbMenu.getColumnModel().getColumn(4).setWidth(0);
-        tbMenu.getColumnModel().getColumn(4).setMinWidth(0);
-        tbMenu.getColumnModel().getColumn(4).setMaxWidth(0);
+        tb.getColumnModel().getColumn(4).setWidth(0);
+        tb.getColumnModel().getColumn(4).setMinWidth(0);
+        tb.getColumnModel().getColumn(4).setMaxWidth(0);
         cboLoai.setRenderer(new MyComboBoxRenderer("Vui lòng chọn loại đồ ăn"));
         cboLoai.setSelectedIndex(-1);
         Enable(true);
+        order();
         EnableText(false);
         dao = new ThucDonDAO();
         ltdDao = new LoaiThucDonDAO();
@@ -95,14 +112,20 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
     }
 
     ThucDon getForm() {
-        ThucDon td = new ThucDon();
-        td.setMaMon(txtMaMon.getText());
-        td.setTenMon(txtTenMon.getText());
-        td.setGiaTien(Float.parseFloat(txtGia.getText()));
-        LoaiThucDon a = (LoaiThucDon) cboLoai.getSelectedItem();
-        td.setLoai(a.getMaLoaiTD());
-        td.setHinhAnh(String.valueOf(fileAnhSP.getName()));
-        return td;
+        try {
+            ThucDon td = new ThucDon();
+            td.setMaMon(txtMaMon.getText());
+            td.setTenMon(txtTenMon.getText());
+            td.setGiaTien(Float.parseFloat(txtGia.getText()));
+            LoaiThucDon a = (LoaiThucDon) cboLoai.getSelectedItem();
+            td.setLoai(a.getMaLoaiTD());
+            td.setHinhAnh(String.valueOf(fileAnhSP.getName()));
+            return td;
+        } catch (Exception e) {
+            MyDialog dlg=new MyDialog("Sai dữ liệu vui lòng kiệm tra lại", ERROR);
+           
+            return  null;
+        }
     }
 
     private ImageIcon getAnhSP(String src) {
@@ -165,7 +188,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
     }
 
     void fillToTable(List<ThucDon> a) {
-        DefaultTableModel model = (DefaultTableModel) tbMenu.getModel();
+        DefaultTableModel model = (DefaultTableModel) tb.getModel();
         model.setRowCount(0);
         for (ThucDon p : a) {
             model.addRow(new Object[]{p.getMaMon(), p.getTenMon(), p.getGiaTien(), ltdDao.selectById(p.getLoai()), p.getHinhAnh()});
@@ -229,22 +252,22 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
     }
 
     void selectTable() {
-        tbMenu.setCellSelectionEnabled(true);
-        ListSelectionModel select = tbMenu.getSelectionModel();
+        tb.setCellSelectionEnabled(true);
+        ListSelectionModel select = tb.getSelectionModel();
         select.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                int row = tbMenu.getSelectedRow();
+                int row = tb.getSelectedRow();
                 if (row >= 0) {
-                    txtMaMon.setText((String) tbMenu.getValueAt(row, 0));
-                    txtTenMon.setText((String) tbMenu.getValueAt(row, 1));
-                    txtGia.setText(String.valueOf(tbMenu.getValueAt(row, 2)));
-                    LoaiThucDon a = (LoaiThucDon) tbMenu.getValueAt(row, 3);
+                    txtMaMon.setText((String) tb.getValueAt(row, 0));
+                    txtTenMon.setText((String) tb.getValueAt(row, 1));
+                    txtGia.setText(String.valueOf(tb.getValueAt(row, 2)));
+                    LoaiThucDon a = (LoaiThucDon) tb.getValueAt(row, 3);
 
                     int width = 130; // chiều rộng mong muốn của JLabel
                     int height = 117; // chiều cao mong muốn của JLabel
-                    Image img = loadImage(String.valueOf(tbMenu.getValueAt(row, 4))).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                    fileAnhSP = new File("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\" + String.valueOf(tbMenu.getValueAt(row, 4)));
+                    Image img = loadImage(String.valueOf(tb.getValueAt(row, 4))).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                    fileAnhSP = new File("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\" + String.valueOf(tb.getValueAt(row, 4)));
                     txtImg.setIcon(new ImageIcon(img));
                     cboLoai.setSelectedItem(a);
                     cboLoai.setSelectedIndex(a.getMaLoaiTD() - 1);
@@ -278,7 +301,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbMenu = new javax.swing.JTable();
+        tb = new javax.swing.JTable();
         btnInsert = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -345,7 +368,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
         jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setRowHeaderView(null);
 
-        tbMenu.setModel(new javax.swing.table.DefaultTableModel(
+        tb.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -356,9 +379,9 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
                 "Mã món", "Tên món", "Giá thành", "Loại", "Title 5"
             }
         ));
-        tbMenu.setRowSelectionAllowed(false);
-        tbMenu.setShowGrid(true);
-        jScrollPane1.setViewportView(tbMenu);
+        tb.setRowSelectionAllowed(false);
+        tb.setShowGrid(true);
+        jScrollPane1.setViewportView(tb);
 
         btnInsert.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-plus-20.png")); // NOI18N
         btnInsert.setText("Thêm");
@@ -421,7 +444,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(103, 103, 103)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(15, 15, 15)
@@ -514,9 +537,9 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
                     .addComponent(btnInportEX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExPortEX)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                .addGap(29, 29, 29))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -550,14 +573,14 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
             if (dlg.getAction() != MyDialog.OK_OPTION) {
                 return;
             }
-            int row = tbMenu.getRowCount();
+            int row = tb.getRowCount();
             for (int i = 0; i < row; i++) {
-                String MaMon = tbMenu.getValueAt(i, 0) + "";
-                String TenMon = tbMenu.getValueAt(i,1) + "";
-                Float GiaThanh = Float.valueOf(tbMenu.getValueAt(i, 2) + "");
-                LoaiThucDon at = ltdDao.selectByName(tbMenu.getValueAt(i, 3).toString());
+                String MaMon = tb.getValueAt(i, 0) + "";
+                String TenMon = tb.getValueAt(i,1) + "";
+                Float GiaThanh = Float.valueOf(tb.getValueAt(i, 2) + "");
+                LoaiThucDon at = ltdDao.selectByName(tb.getValueAt(i, 3).toString());
                 int Loai = at.getMaLoaiTD();
-                String Img = tbMenu.getValueAt(i, 4) + "";
+                String Img = tb.getValueAt(i, 4) + "";
                 ThucDon a = new ThucDon(MaMon, TenMon, GiaThanh, Img, Loai);
                 if (a != null) {
                     dao.insertOrUpdate(a);
@@ -617,13 +640,13 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnInportEXActionPerformed
     private void xuLyXuatFileExcel() {
         XuLyFileExcel xuatFile = new XuLyFileExcel();
-        xuatFile.xuatExcel(tbMenu);
+        xuatFile.xuatExcel(tb);
     }
 
     private void xuLyNhapFileExcel() {
 
         XuLyFileExcel nhapFile = new XuLyFileExcel();
-        nhapFile.nhapExcel(tbMenu);
+        nhapFile.nhapExcel(tb);
 
     }
     private void btnExPortEXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExPortEXActionPerformed
@@ -687,7 +710,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnImage;
-    private javax.swing.JTable tbMenu;
+    private javax.swing.JTable tb;
     private javax.swing.JTextField txtGia;
     private javax.swing.JLabel txtImg;
     private javax.swing.JTextField txtMaMon;

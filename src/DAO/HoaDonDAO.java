@@ -7,6 +7,7 @@ package DAO;
 import POJO.HoaDon;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,15 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
     String Chart = "select sum(tongtien) as 'tongTien'\n"
             + "from hoadon\n"
             + "where month(ngaytao)= ? and YEAR(NgayTao) = ?";
+    String FIND_BY_SQL = "{CALL SP_XuatHoaDonTheoNgay (? , ?) }";
+    public List<HoaDon> FIND_TongTien(Date TuNgay,Date DenNgay){
+         List<HoaDon> list =  this.selectBySql(FIND_BY_SQL, TuNgay, DenNgay);
+        if (list.isEmpty()) {
+            
+            return null;
+        }
+        return list;
+    }
 
     @Override
     public void insertOrUpdate(HoaDon entity) {

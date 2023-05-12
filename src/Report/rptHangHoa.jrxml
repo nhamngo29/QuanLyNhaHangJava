@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c4d6a52-760b-49f1-a0e2-814c2305ba14">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="MaHangHoa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT        MaHangHoa, TenHangHoa, NgayNhap, DonVi, SoLuong, ChiPhi
+FROM            dbo.KhoHang
+WHERE MaHangHoa=$P{MaHangHoa}]]>
+	</queryString>
+	<field name="MaHangHoa" class="java.lang.String"/>
+	<field name="TenHangHoa" class="java.lang.String"/>
+	<field name="NgayNhap" class="java.sql.Date"/>
+	<field name="DonVi" class="java.lang.String"/>
+	<field name="SoLuong" class="java.lang.Double"/>
+	<field name="ChiPhi" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="155" y="26" width="247" height="32" uuid="5a0dd1de-0e68-4029-9a91-9abbc3fefeb9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PHIẾU XUẤT HÀNG HÓA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="127" splitType="Stretch">
+			<textField>
+				<reportElement x="110" y="15" width="127" height="20" uuid="6a9506f4-5163-4f2a-8051-c85142c68b12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MaHangHoa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="40" width="127" height="20" uuid="78ddd255-9784-4dc7-be5b-9873fa60badd"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TenHangHoa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="15" width="126" height="20" uuid="ba423baf-8b40-4873-80b5-8b1996eca296"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NgayNhap}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="40" width="126" height="20" uuid="3a53942b-e624-4a5b-a6ce-dc81631527db"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DonVi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="68" width="127" height="20" uuid="fd3d2b1e-7c82-4223-8b9a-4e223bafca8b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SoLuong}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="68" width="126" height="20" uuid="37160cb8-99d7-43ae-98c4-eed6048a70f5"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ChiPhi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="15" width="100" height="20" uuid="c258661c-b086-4b28-8b04-bb6aede9cf4b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Mã hàng hóa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="100" height="20" uuid="9e8bd165-2770-4f99-a7f1-dab383ad8b05"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Tên hàng hóa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="68" width="100" height="20" uuid="438e36b4-4201-45fa-8465-102cc4fbb5fc"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Số lượng:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="15" width="100" height="20" uuid="e5a2ee3c-2594-479b-bcfb-e81604a87f1e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Ngày nhập:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="40" width="100" height="20" uuid="8ba665c1-a194-43f1-a071-15d0e5e9d1b4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Đơn vị:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="68" width="100" height="20" uuid="0b402c59-7b28-45ef-b073-075e6f481c16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Chi phí:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -28,6 +28,8 @@ import java.awt.Color;
 import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,18 +55,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -78,8 +76,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
     //Xóa
     //Sữa
     KhoHangDAO dao;
-    
-
+   
     public frmQLHangHoa() {
         initComponents();
         dao = new KhoHangDAO();
@@ -91,19 +88,26 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         Enable(true);
         EnableText(false);
         selectTable();
+        order();
         txtTongTien.setEnabled(false);
     }
 
     KhoHang getForm() {
-        KhoHang td = new KhoHang();
-        td.setMaHangHoa(txtMaHH.getText());
-        td.setTenHangHoa(txtTenHH.getText());
-        td.setDonVi(cboDonVi.getSelectedItem().toString());
-        td.setNgayNhap(txtNgayNhap.getDate());
-        td.setSoLuong(Integer.parseInt(txtSL.getText()));
-        td.setChiPhi(Double.parseDouble(txtChiPhi.getText()));
-        td.setTongChiPhi(td.getSoLuong()*td.getChiPhi());
+         try {
+            KhoHang td = new KhoHang();
+            td.setMaHangHoa(txtMaHH.getText());
+            td.setTenHangHoa(txtTenHH.getText());
+            td.setDonVi(cboDonVi.getSelectedItem().toString());
+            td.setNgayNhap(txtNgayNhap.getDate());
+            td.setSoLuong(Integer.parseInt(txtSL.getText()));
+            td.setChiPhi(Double.parseDouble(txtChiPhi.getText()));
+            td.setTongChiPhi(td.getSoLuong()*td.getChiPhi());
         return td;
+        } catch (Exception e) {
+            MyDialog dlg=new MyDialog("Sai dữ liệu vui lòng kiệm tra lại", ERROR);
+           
+            return  null;
+        }
     }
 
     void InsertOrUpdate() {
@@ -113,6 +117,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         this.clearForm(); // xóa trắng form
         MsgBox.alert(this, "Thêm mới,update thành công!");
     }
+    
     void selectTable() {
         tb.setCellSelectionEnabled(true);
         ListSelectionModel select = tb.getSelectionModel();
@@ -132,7 +137,19 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
             }
         });
     }
+    void order() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tb.getModel());
+        tb.setRowSorter(sorter);
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = tb.columnAtPoint(e.getPoint());
+                sorter.toggleSortOrder(column);
+                sorter.sort();
+            }
+        });
+    }
     void clearForm() {
+        
         txtMaHH.setText("");
         txtTenHH.setText("");
         txtChiPhi.setText("");
@@ -201,7 +218,6 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tb = new javax.swing.JTable();
         txtSearch = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
@@ -280,6 +296,11 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tb);
 
         txtSearch.setPreferredSize(new java.awt.Dimension(104, 27));
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchKeyPressed(evt);
+            }
+        });
 
         jLabel8.setText("Tìm kiếm");
 
@@ -534,7 +555,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    void fillToTable(List<KhoHang> a) {
+     public  void fillToTable(List<KhoHang> a) {
         DefaultTableModel model = (DefaultTableModel) tb.getModel();
         model.setRowCount(0);
         for (KhoHang p : a) {
@@ -643,6 +664,27 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnExportEx1ActionPerformed
 
+    private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
+        // TODO add your handling code here:
+        String ten=txtSearch.getText().toString();
+        if(ten.isEmpty())
+        {
+            MsgBox.alert(this, "Vui lòng nhập tên hàng hóa bạn muốn tìm");
+        }
+        else
+        {
+            if(dao.SearchByNameHH(ten)==null||dao.SearchByNameHH(ten).size()<=0)
+            {
+                 MsgBox.alert(this, "không tộn tài hàng hóa bạn muốn tìm");
+                 return;
+            }
+            else
+            {
+                fillToTable(dao.SearchByNameHH(ten));
+            }
+        }
+    }//GEN-LAST:event_txtSearchKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportEx;
@@ -674,7 +716,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
     private javax.swing.JPopupMenu pmenu;
     private javax.swing.JMenuItem pmenuEdit;
     private javax.swing.JMenuItem pmenuRemove;
-    private javax.swing.JTable tb;
+    public static final javax.swing.JTable tb = new javax.swing.JTable();
     private javax.swing.JTextField txtChiPhi;
     private javax.swing.JTextField txtMaHH;
     private com.toedter.calendar.JDateChooser txtNgayNhap;

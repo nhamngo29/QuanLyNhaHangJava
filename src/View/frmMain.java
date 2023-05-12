@@ -9,6 +9,8 @@ import View.QuanLy.frmQLNhanVien;
 import View.QuanLy.frmQLHangHoa;
 import POJO.NhanVien;
 import UIS.Auth;
+import View.QuanLy.frmQLBanAn;
+import View.QuanLy.frmQLDoanhThu;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.WindowConstants;
@@ -54,22 +56,24 @@ public class frmMain extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(56, 13));
 
         desktopPane.setPreferredSize(new java.awt.Dimension(1154, 623));
 
-        btnQuanLy.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-manager-20.png")); // NOI18N
+        btnQuanLy.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-manager-30.png")); // NOI18N
         btnQuanLy.setMnemonic('f');
         btnQuanLy.setText("Quản lý");
+        btnQuanLy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         menuItemQLFood.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuItemQLFood.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-menu-20.png")); // NOI18N
@@ -102,6 +106,11 @@ public class frmMain extends javax.swing.JFrame {
         saveAsMenuItem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-paid-bill-20.png")); // NOI18N
         saveAsMenuItem.setMnemonic('a');
         saveAsMenuItem.setText("Hóa đơn");
+        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsMenuItemActionPerformed(evt);
+            }
+        });
         btnQuanLy.add(saveAsMenuItem);
 
         jMenu1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-staff-20.png")); // NOI18N
@@ -121,11 +130,23 @@ public class frmMain extends javax.swing.JFrame {
 
         btnQuanLy.add(jMenu1);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-table-20.png")); // NOI18N
+        jMenuItem3.setText("Bàn ăn");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        btnQuanLy.add(jMenuItem3);
+
         menuBar.add(btnQuanLy);
 
+        editMenu.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-user-20.png")); // NOI18N
         editMenu.setMnemonic('e');
         editMenu.setText("Tài khoản");
+        editMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        cutMenuItem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\ico_user.png")); // NOI18N
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Thông tin tài khoản");
         cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -135,11 +156,22 @@ public class frmMain extends javax.swing.JFrame {
         });
         editMenu.add(cutMenuItem);
 
+        copyMenuItem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-logout-20.png")); // NOI18N
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Đăng xuất");
         editMenu.add(copyMenuItem);
 
         menuBar.add(editMenu);
+
+        jMenu2.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-booking-30.png")); // NOI18N
+        jMenu2.setText("Đặt bàn");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        menuBar.add(jMenu2);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
@@ -154,14 +186,6 @@ public class frmMain extends javax.swing.JFrame {
 
         menuBar.add(helpMenu);
 
-        jMenu2.setText("Đặt bàn");
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu2MouseClicked(evt);
-            }
-        });
-        menuBar.add(jMenu2);
-
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,7 +196,7 @@ public class frmMain extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -218,10 +242,16 @@ public class frmMain extends javax.swing.JFrame {
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_saveMenuItemActionPerformed
-
+    public static void setVisible(Boolean a)
+    {
+        frmMain.setVisible(a);
+    }
+    
     private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
         // TODO add your handling code here:
-
+        frmInformationAccount frm=new frmInformationAccount();
+        frm.setVisible(true);
+       frm.setLocationRelativeTo(null);
     }//GEN-LAST:event_cutMenuItemActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
@@ -234,6 +264,28 @@ public class frmMain extends javax.swing.JFrame {
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        frmQLDoanhThu frm = new frmQLDoanhThu();
+        frm.pack();
+        frm.setMaximizable(true);
+        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        frmQLBanAn frm = new frmQLBanAn();
+        frm.pack();
+        frm.setMaximizable(true);
+        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,6 +335,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menuItemQLFood;
     private javax.swing.JMenuItem saveAsMenuItem;

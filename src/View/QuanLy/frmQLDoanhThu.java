@@ -11,45 +11,24 @@ import Custom.XuLyFileExcel;
 import DAO.LoaiThucDonDAO;
 import DAO.ThucDonDAO;
 import POJO.HoaDon;
-import  DAO.HoaDonDAO;
+import DAO.HoaDonDAO;
 import POJO.LoaiThucDon;
 import POJO.ThucDon;
 import UIS.MsgBox;
-import java.awt.Color;
-import static java.awt.Desktop.getDesktop;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.Date;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -60,19 +39,46 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmFood
      */
-   
     //Xóa
     //Sữa
     HoaDonDAO dao;
+
     public frmQLDoanhThu() {
         initComponents();
-        dao=new HoaDonDAO();
+        dao = new HoaDonDAO();
+        tbHoaDon.setAutoCreateRowSorter(true);
+        order();
     }
-    void chart() {
+    void order() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tbHoaDon.getModel());
+        tbHoaDon.setRowSorter(sorter);
+        tbHoaDon.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = tbHoaDon.columnAtPoint(e.getPoint());
+                sorter.toggleSortOrder(column);
+                sorter.sort();
+            }
+        });
+    }
 
-       
+    void fillToTable(List<HoaDon> a) {
+        DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
+        model.setRowCount(0);
+        for (HoaDon p : a) {
+            model.addRow(new Object[]{p.getMaHD(), p.getNgayTao(), p.getMaNV(), p.getMaBan(), p.getTongTien(), p.getTrangThai()});
+        }
     }
-    
+
+    void Sort() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tbHoaDon.getModel());
+        tbHoaDon.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        int columnIndexToSort = 1;
+        sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,8 +97,11 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         pnlReport = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbHoaDon = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        btnXem = new javax.swing.JButton();
+        txtTong = new javax.swing.JLabel();
+        txtTong1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnInsert = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
@@ -126,23 +135,47 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
 
         pnlReport.setLayout(new javax.swing.BoxLayout(pnlReport, javax.swing.BoxLayout.LINE_AXIS));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "MaHD", "NgayTao", "MaNV", "MaBan", "TongTien", "TrangThai"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbHoaDon);
 
         pnlReport.add(jScrollPane1);
 
         jButton1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-export-csv-20.png")); // NOI18N
         jButton1.setText("Xuất");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnXem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-eye-30.png")); // NOI18N
+        btnXem.setText("Xem");
+        btnXem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXemMouseClicked(evt);
+            }
+        });
+        btnXem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemActionPerformed(evt);
+            }
+        });
+
+        txtTong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTong.setText("0 VND");
+
+        txtTong1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtTong1.setText("Tổng Doanh thu");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -162,9 +195,14 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dtcTo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 552, Short.MAX_VALUE))
+                        .addGap(43, 43, 43)
+                        .addComponent(btnXem, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 388, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtTong1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(txtTong, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -177,12 +215,16 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(dtcFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dtcTo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlReport, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                .addGap(209, 209, 209)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(pnlReport, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtTong1)
+                    .addComponent(txtTong)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
 
         jTabbedPane1.addTab("Danh sách", jPanel2);
@@ -262,7 +304,7 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
                         .addComponent(txtMaNV)
                         .addComponent(jComboBox1, 0, 655, Short.MAX_VALUE))
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,7 +325,7 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInsert)
                     .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,33 +354,67 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        
+
     }//GEN-LAST:event_btnInsertActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
 
-        
+
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-      
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void cboNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNgayActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_cboNgayActionPerformed
-   
+
+    private void btnXemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXemMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXemMouseClicked
+    private void Tong() {
+        DecimalFormat x = new DecimalFormat("###,###,###");
+        int Tong = 0;
+        for (int i = 0; i < tbHoaDon.getRowCount(); i++) {
+            Object obj = tbHoaDon.getValueAt(i, 4);
+            if (obj != null && obj instanceof Number) {
+                Tong += ((Number) obj).intValue();
+            }
+        }
+        txtTong.setText(x.format(Tong)+" VNĐ");
+    }
+    private void btnXemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemActionPerformed
+        Date jCalDate1 = dtcFrom.getDate();
+        Date jCalDate2 = dtcTo.getDate();
+        if (dao.FIND_TongTien(jCalDate1, jCalDate2) == null)
+            MsgBox.alert(this, "Những ngày này không có giao dịch ");
+        else {
+            fillToTable(dao.FIND_TongTien(jCalDate1, jCalDate2));
+            Tong();
+        }
+    }//GEN-LAST:event_btnXemActionPerformed
+    private void xuLyXuatFileExcel() {
+        XuLyFileExcel xuatFile = new XuLyFileExcel();
+        xuatFile.xuatExcel(tbHoaDon);
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        xuLyXuatFileExcel();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnXem;
     private javax.swing.JComboBox<String> cboNgay;
     private com.toedter.calendar.JDateChooser dtcFrom;
     private com.toedter.calendar.JDateChooser dtcTo;
@@ -355,9 +431,11 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlReport;
+    private javax.swing.JTable tbHoaDon;
     private javax.swing.JTextField txtMaNV;
     private javax.swing.JTextField txtMaNV1;
+    private javax.swing.JLabel txtTong;
+    private javax.swing.JLabel txtTong1;
     // End of variables declaration//GEN-END:variables
 }
