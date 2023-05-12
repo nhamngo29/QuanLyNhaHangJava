@@ -23,9 +23,24 @@
   - [2.2.1	Sơ đồ quan hệ thực thể](#SoDoQuanHeThucThe)
   - [2.2.2	Thiết kế chi tiết các thực thể](#ThietKeChiTietCacThucThe)
 - [2.3	THIẾT KẾ GIAO DIỆN (MOCKUP)](#ThietKeGiaoDien)
-  - [2.3.1	Sơ đồ tổ chức giao diện](#2.3.1	Sơ đồ tổ chức giao diện)
-- 
-[III. Tổng kết](#TongKet)
+  - [2.3.1	Sơ đồ tổ chức giao diện](#SoDoToChucGiaoDien)
+  - [2.3.2	Giao diện mockup](#GiaoDien)
+ 
+[III	KIỂM THỬ](#KiemThu)
+
+[IV	ĐÓNG GÓI VÀ TRIỂN KHAI](#DongGoiVaTrienKhai)
+
+- [4.1	HƯỚNG DẪN CHUYỂN ĐỔI JAR THÀNH EXE](#HuongDanChuyenDoiJarThanhExe)
+- [4.2	HƯỚNG DẪN CÀI ĐẶT TRIỂN KHAI](#HuongDanCaiDatTrienKhai)
+- [4.3	HƯỚNG DẪN SỬ DỤNG PHẦN MỀM](#HungDanSuDungPhanMem)
+
+[V ĐÓNG GÓI VÀ TRIỂN KHAI](#DongGoiVaTrienKhai)
+
+- [5.1	SẢN PHẨM PHẦN MỀM](#SanPhamPhanMem)
+- [5.2	HƯỚNG DẪN CÀI ĐẶT](#SanPhamPhanMem)
+
+[VI. Tổng kết](#TongKet)
+
 <a name="Modau"></a>
 ## I. PHÂN TÍCH
 <a name="PhanTich"></a>
@@ -236,31 +251,32 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/ae8ab889-9575-485b-9d4c-a8aadbaaf95f)
 ## IV	ĐÓNG GÓI VÀ TRIỂN KHAI
 <a name="DongGoiVaTrienKhai"></a>
-### 5.1	HƯỚNG DẪN CHUYỂN ĐỔI JAR THÀNH EXE
+### 4.1	HƯỚNG DẪN CHUYỂN ĐỔI JAR THÀNH EXE
 <a name="HuongDanChuyenDoiJarThanhExe"></a>
 - Sử dụng phaần mềm EXE4J để chuyển đổi jar sang exe
 - Sử dụng phần mềm InnoSetup để đóng gói'
-### 5.2	HƯỚNG DẪN CÀI ĐẶT TRIỂN KHAI
+### 4.2	HƯỚNG DẪN CÀI ĐẶT TRIỂN KHAI
 <a name="HuongDanCaiDatTrienKhai"></a>
 - Cài SQL Server 2008 trở lên
 - Tạo CSDL QuanLyNhaHang bằng cách chạy file SQL_QLNhaHang.sql
 - Cài đặt JDK 1.8 trở lên
 - Chạy file setup
-### 5.3	HƯỚNG DẪN SỬ DỤNG PHẦN MỀM
+### 4.3	HƯỚNG DẪN SỬ DỤNG PHẦN MỀM
 <a name="HungDanSuDungPhanMem"></a>
 - Đăng nhập với tài khoản username: NV01 và password:123
 - Cấp các tài khoản có vai trò là quản lý
 -	Đăng nhập tài khoản mới và xóa tài khoản admin
 -	Xem hướng dẫn sử dụng trong menu trợ giúp của phần mềm
 ## V ĐÓNG GÓI VÀ TRIỂN KHAI
-### 6.1	SẢN PHẨM PHẦN MỀM
+<a name="DongGoiVaTrienKhai"></a>
+### 5.1	SẢN PHẨM PHẦN MỀM
 <a name="SanPhamPhanMem"></a>
 | TT | Thành phần  | Mô tả |
 |--------------|-------|------|
 | 1 | RestaurantVictory-setup.exe | File cài đặt |
 | 2 | DB_QuanLyNhaHang | Cơ sở dữ liệu |
 
-### 6.2	HƯỚNG DẪN CÀI ĐẶT
+### 5.2	HƯỚNG DẪN CÀI ĐẶT
 <a name="HuongDanCaiDat"></a>
 -	Bước 1: Chạy DB_QuanLyNhaHang.sql để tạo CSDL QuanLyNhaHang
 -	Bước 2: Đặt mật khẩu sa của SQL Server là 123456
