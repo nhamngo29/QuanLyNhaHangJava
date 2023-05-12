@@ -36,7 +36,7 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
   - Hàng hóa
   - Nguyên liệu
   - Danh sách Món ăn
-<p> Yêu cầu về bảo mật</p>
+<p> Yêu cầu về bảo mật </p>
   - Phần mềm được viết cho 2 đối tượng sử dụng là **Nhân viên, Quản lý** với yêu cầu bảo mật như sau: 
   - **Nhân viên** và **Quản lý** phải đăng nhập mới được sử dụng phần mềm
   - **Nhân viên** sẽ được phân thành **Phục vụ** và **Thu ngân**
