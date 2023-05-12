@@ -18,7 +18,7 @@ public class MD5 {
 	{
 		try {
 
-			// Static getInstance method is called with hashing MD5
+	
 			MessageDigest md = MessageDigest.getInstance("MD5");
 
 			// digest() method is called to calculate message digest
