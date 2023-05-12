@@ -24,12 +24,12 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 `Restaurant Victory` mong muốn xây dựng một phần mềm để giải quyết khó khăn trên.
 **Yêu cầu chức năng nghiệp vụ:**
 - Quản lý
---  Danh sách món ăn
--- Danh Sách Nhân viên
--- Gọi món ăn
--- Xem món ăn
--- Xem Yêu cầu khác
--- Xem đặt bàn
+  -  Danh sách món ăn
+  - Danh Sách Nhân viên
+  - Gọi món ăn
+  - Xem món ăn
+  - Xem Yêu cầu khác
+  - Xem đặt bàn
 ## III. Tổng kết
 <a name="TongKet"></a>
 - Tự đánh giá việc triển khai bài tập nhóm, tự nhận xét kết quả đạt được:
