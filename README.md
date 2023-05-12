@@ -46,6 +46,74 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 #### Yêu cầu về môi trường công nghệ
       Ứng dụng phải được thực với công nghệ Swing và JDBC chạy trên mọi hệ điều hành với môi trường JDK tối thiểu 1.8
       Hệ quản trị CSDL SQL Server 2008 trở lên
+### 1.3	USE CASE
+  Use case là sơ đồ tổng quan về mặt chức năng và phân vai trò người sử dụng. Dựa vào yêu cầu hệ thống của khách hàng, chúng ta có thể phác thảo sơ đồ use case như sau.
+  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4814ab30-47de-4fda-a47f-b4edd3120faf)
+- CHI TIẾT CÁC CHỨC NĂNG
+    - Mỗi chức năng quản lý bao gồm các chức năng con
+      - Xem: xem tất cả và chi tiết một mục
+      - Thêm: thêm mới vào cơ sở dữ liệu
+      - Xóa: xóa theo mã
+      - Sửa: cập nhật dữ liệu đang xem
+      - Tìm kiếm: tìm kiếm theo điều kiện
+      - Điều hướng: di chuyển đến dữ liệu của bản ghi chi tiết trước và sau
+      - Các chức năng thao tác dữ liệu (thêm, sửa, xóa) cần được kiểm lỗi hợp lý với dữ liệu
+    - Chức năng thống kê doanh thu theo ngày/tháng:
+      - Doanh thu theo ngày
+        - Số Bàn
+        - Mã nhân viên
+    - Chi tiết hóa đơn
+      - Mã hóa đơn chi tiết
+      - Mã hóa đơn
+      - Mã món ăn 
+      - Số lượng
+    - Danh sách bàn
+      - Mã bàn 
+      - Loại bàn
+      - Ghi chú
+    - Danh mục
+      - Mã danh mục 
+      - Tên danh mục
+      - Mô tả
+    - Đặt bàn
+      - Mã đặt bàn 
+      - Mã bàn
+      - Mã khách hàng
+      - Ngày đặt bàn
+      - Số lượng khách
+      - Ghi chú 
+    - Món ăn
+      - Mã món ăn
+      - Tên món ăn 
+      - Giá tiền
+      - Mã danh mục
+    - Nhân Viên
+      - Mã nhân viên
+      - Password
+      - Họ tên
+      - Số điện thoại
+      - Chức vụ 
+      - Giới tính
+## II. THIẾT KẾ
+### 2.1	MÔ HÌNH TRIỂN KHAI
+Ứng dụng phần mềm được xây dựng để phục vụ cho nhiều người dùng nhưng cơ sở dữ liệu thì lưu trữ tập trung.
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4d370b01-7abc-4c44-88a7-9c8d1b0fb34e)
+- Cần một máy cài SQL Server 2008+. Máy này cần hệ điều hành window xp trở lên
+-	Các máy nhân viên phòng đào tạo cài phần mềm edusys. Các máy nhân viên cần JDK 1.8+ với hệ điều hành bất ký
+### 2.2	THIẾT KẾ CSDL
+#### 2.2.1	Sơ đồ quan hệ thực thể
+##### *2.2.1.1	ERD Diagram level 1*
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6185eaf8-459c-40a5-a461-7eb00f115a87)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/ace257a6-5770-4972-b2b6-3546837425d3)
+#### 2.2.2	Thiết kế chi tiết các thực thể
+##### *2.2.2.1	Chi tiết hóa đơn*
+- Bảng Chi tiết hóa đơn
+ 
+| Cột 1 Hàng 1 | Cột 2 | Cột 3| Cột 4 |
+|--------------|-------|------|-------|
+| Hàng 2 | 2 x 1 | 2 x 2 | 2 x 3 | 2 x 4 |
+| Hàng 3 | 3 x 1 | 3 x 2 | 3 x 3 | 3 x 4 |
+| Hàng 4 | 4 x 1 | 4 x 2 | 4 x 3 | 4 x 4 |
 
 ## III. Tổng kết
 <a name="TongKet"></a>
