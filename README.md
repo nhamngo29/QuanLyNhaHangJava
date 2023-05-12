@@ -11,11 +11,20 @@
 
 ### Mục lục
 [I. PHÂN TÍCH](#Modau)
+
 - [1.1 HIỆN TRẠNG-KHẢO SÁT](#HienTrangKhaoSat)
 - [1.2 YÊU CẦU HỆ THỐNG CẦN LÀM](#YeuCauHeThongCanLam)
 - [1.3	USE CAS](#useCase)
+
 [II. THIẾT KẾ](#ThietKe)
-[2.1	MÔ HÌNH TRIỂN KHAI](#MoHinhTrienKhai)
+
+- [2.1	MÔ HÌNH TRIỂN KHAI](#MoHinhTrienKhai)
+- [2.2	THIẾT KẾ CSDL](#ThietKeCSDL)
+  - [2.2.1	Sơ đồ quan hệ thực thể](#SoDoQuanHeThucThe)
+  - [2.2.2	Thiết kế chi tiết các thực thể](#ThietKeChiTietCacThucThe)
+- [2.3	THIẾT KẾ GIAO DIỆN (MOCKUP)](#ThietKeGiaoDien)
+  - [2.3.1	Sơ đồ tổ chức giao diện](#2.3.1	Sơ đồ tổ chức giao diện)
+- 
 [III. Tổng kết](#TongKet)
 <a name="Modau"></a>
 ## I. PHÂN TÍCH
