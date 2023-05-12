@@ -106,14 +106,80 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6185eaf8-459c-40a5-a461-7eb00f115a87)
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/ace257a6-5770-4972-b2b6-3546837425d3)
 #### 2.2.2	Thiết kế chi tiết các thực thể
-##### *2.2.2.1	Chi tiết hóa đơn*
 - Bảng Chi tiết hóa đơn
  
-| Cột 1 Hàng 1 | Cột 2 | Cột 3| Cột 4 |
+| Tên cột | Kiểu  |Ràng buộc | Ghi chú |
 |--------------|-------|------|-------|
-| Hàng 2 | 2 x 1 | 2 x 2 | 2 x 3 | 2 x 4 |
-| Hàng 3 | 3 x 1 | 3 x 2 | 3 x 3 | 3 x 4 |
-| Hàng 4 | 4 x 1 | 4 x 2 | 4 x 3 | 4 x 4 |
+| MaHoaDonCT | INT | PK, NOT NULL | Mã hóa đơn chi tiết |
+| MaHoaDon | INT | FK,NOT NULL | Mã hóa đơn |
+| MaMonAn  | NVARCHAR(15) |FK,NOT NULL | Mã món ăn  |
+| SoLuong  | INT | NOT NULL | Số lượng |
+
+- Bảng Bàn Ăn
+
+| Tên cột | Kiểu  |Ràng buộc | Ghi chú |
+|--------------|-------|------|-------|
+|MaBan | INT | PK, NOT NULL | Mã Bàn |
+| LoaiBan | INT | NOT NULL | Loại Bàn |
+| TrangThai  | NVARCHAR(50) | NOT NULL | Trạng Thái   |
+
+- Bảng Đặt Bàn
+
+| Tên cột | Kiểu  |Ràng buộc | Ghi chú |
+|--------------|-------|------|-------|
+| MaDatBan | NVARCHAR(10) | PK, NOT NULL | Mã đặt bàn  |
+|TenKH | NVARCHAR(50) | NOT NULL | Tên khách hàng |
+| SDTKH  | NVARCHAR(15) | NOT NULL | Số điện thoại   |
+| NgayDatBan | DATE | NOT NULL | Ngày đặt bàn |
+| GioDat  | NVARCHAR(10) | NOT NULL | Giờ đặt   |
+| SoNguoi | Số người | NOT NULL | Số người |
+| GhiChu  | NVARCHAR(50) | NULL | Ghi chú |
+| MaNV  | NVARCHAR(5) | FK, NOT NULL | Mã nhân viên |
+
+- Bảng Hóa Đơn
+
+| Tên cột | Kiểu  |Ràng buộc | Ghi chú |
+|--------------|-------|------|-------|
+| MaHoaDon | INT | PK, NOT NULL | Mã hóa đơn  |
+| MaBan | NVARCHAR(10) | FK, NOT NULL | Mã bàn |
+| TongTien  | MONNEY | NOT NULL | Tổng tiền |
+| MaNV | NVARCHAR(5) | FK,NOT NULL | Mã nhân viên |
+| NgayTao  | Date | NOT NULL | Ngày tạo   |
+| TrangThai | NVARCHAR(50) | NOT NULL | Số người |
+| GhiChu  | NVARCHAR(50) | NOT NULL | Trạng thái |
+
+- Bảng Thực Đơn
+
+| Tên cột | Kiểu  |Ràng buộc | Ghi chú |
+|--------------|-------|------|-------|
+| MaMon | NVARCHAR(15) | PK, NOT NULL | Mã món ăn  |
+| TenMon | NVARCHAR(50) | NOT NULL | Tên món ăn |
+| GiaTien  | MONNEY | NOT NULL | Giá tiền |
+| HinhAnh | NVARCHAR(50) | NOT NULL | Hình ảnh |
+| Loai  | NVARCHAR(50) | NOT NULL | Loại |
+
+- Bảng Nhân Viên
+
+| Tên cột | Kiểu  |Ràng buộc | Ghi chú |
+|--------------|-------|------|-------|
+| MaNV | NVARCHAR(5) | PK, NOT NULL | Mã nhân viên  |
+| Password | NVARCHAR(50) | NOT NULL | Mật khẩu |
+| HoTen  | NVARCHAR(50) | NOT NULL | Họ và tên |
+| SoDT | NVARCHAR(15) | NOT NULL | Số điện thoại |
+| ChucVu  | NVARCHAR(30) | NOT NULL | Chức vụ |
+| GioiTinh  | BIT | NOT NULL | Giới tính |
+
+- Bảng Kho hàng
+
+| Tên cột | Kiểu  |Ràng buộc | Ghi chú |
+|--------------|-------|------|-------|
+| MaHangHoa | NVARCHAR(50) | PK, NOT NULL | Mã hàng hóa   |
+| TenHangHoa | NVARCHAR(50) | NOT NULL | Tên hàng hóa |
+| NgayNhap  | DATE | NOT NULL | Ngày nhập hàng |
+| DonVi | NVARCHAR(50) | NOT NULL | Đơn vị |
+| SoLuong  | int | NOT NULL | Số lượng |
+| ChiPhi  | FLOAT | NOT NULL | Chi Phí |
+| TongChiPhi  | FLOAT | NOT NULL | Tổng chi phí |
 
 ## III. Tổng kết
 <a name="TongKet"></a>
