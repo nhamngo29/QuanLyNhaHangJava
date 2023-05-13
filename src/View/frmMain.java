@@ -29,7 +29,13 @@ public class frmMain extends javax.swing.JFrame {
     public frmMain() {
         initComponents();
         this.setLocationRelativeTo(null);
-
+        desktopPane.removeAll();
+        frmOrder frm = new frmOrder();
+        frm.pack();
+        frm.setMaximizable(true);
+        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
 //        if(Auth.isManager())
 //        {
 //            btnQuanLy.setVisible(true);
@@ -196,7 +202,7 @@ public class frmMain extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
         );
 
         pack();

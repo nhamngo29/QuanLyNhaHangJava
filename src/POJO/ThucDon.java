@@ -24,6 +24,11 @@ public class ThucDon {
         this.Loai = Loai;
     }
 
+    @Override
+    public String toString() {
+        return  TenMon;
+    }
+
     public ThucDon() {
       
     }

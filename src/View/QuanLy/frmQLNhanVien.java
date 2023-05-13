@@ -338,6 +338,11 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         jLabel6.setText("Chức vụ:");
 
         cboChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý", "Lễ Tân", "Nhân Viên Phục Vụ" }));
+        cboChucVu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboChucVuActionPerformed(evt);
+            }
+        });
 
         pnImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -785,6 +790,10 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     private void btnPhanQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanQuyenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPhanQuyenActionPerformed
+
+    private void cboChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboChucVuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboChucVuActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

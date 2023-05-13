@@ -29,6 +29,7 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
             + "from hoadon\n"
             + "where month(ngaytao)= ? and YEAR(NgayTao) = ?";
     String FIND_BY_SQL = "{CALL SP_XuatHoaDonTheoNgay (? , ?) }";
+     String SELECT_YEAR = "{CALL usp_SelectDoanhThuTheoNam ( ? ) }";
     public List<HoaDon> FIND_TongTien(Date TuNgay,Date DenNgay){
          List<HoaDon> list =  this.selectBySql(FIND_BY_SQL, TuNgay, DenNgay);
         if (list.isEmpty()) {
@@ -150,7 +151,14 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
             throw new RuntimeException(e);
         }
     }
-
+    public List<HoaDon> SelectYear(int Nam){
+         List<HoaDon> list =  this.selectBySql(SELECT_YEAR, Nam);
+        if (list.isEmpty()) {
+            
+            return null;
+        }
+        return list;
+    }
     protected List<HoaDon> selectBySqlChart(String sql, Object... args) {
         List<HoaDon> list = new ArrayList<HoaDon>();
         try {
