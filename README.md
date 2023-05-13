@@ -266,11 +266,11 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
   
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/fb018b59-36ba-4637-9a9c-4bd4f97d64bc)
 
-  - Cập nhật
+   - Cập nhật
 
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/680dc1fc-78cf-4303-941b-3b9ba1b5530e)
 
-  - Phiếu nhập hàng
+   - Phiếu nhập hàng
 
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/cb1b0327-3f43-4047-bc66-90ea47b4c6be)
 
