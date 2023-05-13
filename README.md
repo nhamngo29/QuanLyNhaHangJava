@@ -241,10 +241,47 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
 ### 2.3.2	Giao diện mockup:
 
 - Login
+
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6bf72fd9-0bd6-460a-add2-79cd90290f1d)
+
 - Menu và bàn
+
+
+
 - Quản lý doanh thu
+
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/40f55fb8-4007-45c8-8376-a87cca6939d4)
+
 - Quản lý bàn
+
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/374d33ac-8477-4008-a098-8465eb915b2f)
+
+- Quản lý nhân viên
+
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/1fb47ee0-920c-412e-a2ce-5b1fd33493e9)
+
+- Quản lý nhập xuất kho
+
+  - Danh sách
+  
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/fb018b59-36ba-4637-9a9c-4bd4f97d64bc)
+
+  - Cập nhật
+
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/680dc1fc-78cf-4303-941b-3b9ba1b5530e)
+
+  - Phiếu nhập hàng
+
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/cb1b0327-3f43-4047-bc66-90ea47b4c6be)
+
+- Quản lý thực đơn
+
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/75a5778c-8cca-4197-86ac-0883ed840fc0)
+
+
 - Thông tin tài khoản
+
+
 - Đổi mật khẩu
 <a name="KiemThu"></a>
 ## III	KIỂM THỬ
