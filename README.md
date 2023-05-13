@@ -249,8 +249,13 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
 
 
 - Quản lý doanh thu
-
+  - Danh sách
+  
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/40f55fb8-4007-45c8-8376-a87cca6939d4)
+
+  - Biểu đồ
+  
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/f20f5aec-1811-4f05-bcc9-3483cb0b22c1)
 
 - Quản lý bàn
 
@@ -301,10 +306,8 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
 
 -	KIỂM THỬ FORM QUẢN LÝ DOANH THU THEO NGÀY
 
-  - Danh sách
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/81f8cf17-9f11-4440-8202-557cea2fdb1b)
-  - Biểu đồ
-  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/f20f5aec-1811-4f05-bcc9-3483cb0b22c1)
+ 
 
 -	KIỂM THỬ FORM LOGIN
 
