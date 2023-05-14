@@ -9,7 +9,11 @@
   <li>Nguyễn Cường</li>
 </ul>
 
-- PHÂN CÔNG CÔNG VIỆC
+<div align="center">
+
+# PHÂN CÔNG CÔNG VIỆC
+
+</div>
 
 | STT | Họ tên  | Nôi dung công việc | Ghi chú |
 |--------------|-------|------|-------|
