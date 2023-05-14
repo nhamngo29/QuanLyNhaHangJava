@@ -245,6 +245,7 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6bf72fd9-0bd6-460a-add2-79cd90290f1d)
 
 - Menu và bàn
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/2f733af2-2725-4f91-acb3-908a5d027410)
 
 
 
