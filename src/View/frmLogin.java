@@ -22,7 +22,9 @@ public class frmLogin extends javax.swing.JFrame {
     NhanVienDAO dao;
 
     public frmLogin() {
+        Auth.user=null;
         initComponents();
+        this.setVisible(true);
         dao = new NhanVienDAO();
         this.setLocationRelativeTo(null);
         lbInvisiblePassword.setVisible(false);
@@ -58,10 +60,12 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         lbShowPassword = new javax.swing.JLabel();
         lbInvisiblePassword = new javax.swing.JLabel();
+        lblClose = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel2.setBackground(new java.awt.Color(79, 37, 64));
         jPanel2.setForeground(new java.awt.Color(79, 37, 64));
@@ -79,7 +83,7 @@ public class frmLogin extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel2)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,6 +173,13 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
 
+        lblClose.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-cancel-30.png")); // NOI18N
+        lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblCloseMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -190,19 +201,19 @@ public class frmLogin extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtPassWord, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbShowPassword)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbInvisiblePassword))
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(139, Short.MAX_VALUE))))
+                                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(txtPassWord, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbShowPassword)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbInvisiblePassword)))
+                        .addContainerGap(12, Short.MAX_VALUE))))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -212,11 +223,17 @@ public class frmLogin extends javax.swing.JFrame {
                         .addGap(150, 150, 150)
                         .addComponent(jLabel4)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblClose)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(109, 109, 109)
+                .addContainerGap()
+                .addComponent(lblClose)
+                .addGap(87, 87, 87)
                 .addComponent(jLabel4)
                 .addGap(34, 34, 34)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -334,6 +351,11 @@ public class frmLogin extends javax.swing.JFrame {
         txtUserName.setText("");
     }//GEN-LAST:event_txtUserNameFocusGained
 
+    private void lblCloseMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMousePressed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_lblCloseMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -387,6 +409,7 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbInvisiblePassword;
     private javax.swing.JLabel lbShowPassword;
+    private javax.swing.JLabel lblClose;
     private javax.swing.JLabel txtForgetPassWord;
     private javax.swing.JPasswordField txtPassWord;
     private javax.swing.JTextField txtUserName;

@@ -21,6 +21,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -63,6 +64,8 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
 
     //Clear
     void clearForm() {
+
+
         txtMaNV.setText("");
         txtTenNV.setText("");
         grbSex.clearSelection();
@@ -85,7 +88,9 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     //Sữa
 
     public frmQLNhanVien() {
+        
         initComponents();
+        
         tb.getColumnModel().getColumn(6).setWidth(0);
         tb.getColumnModel().getColumn(6).setMinWidth(0);
         tb.getColumnModel().getColumn(6).setMaxWidth(0);

@@ -71,6 +71,7 @@ public class frmInformationAccount extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin"));
 

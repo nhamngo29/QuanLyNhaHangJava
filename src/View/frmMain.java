@@ -13,6 +13,7 @@ import View.QuanLy.frmQLBanAn;
 import View.QuanLy.frmQLDoanhThu;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.WindowConstants;
 
 /**
@@ -31,17 +32,18 @@ public class frmMain extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         desktopPane.removeAll();
         frmOrder frm = new frmOrder();
-        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
-        frm.setVisible(true);
+        frm.setSize(desktopPane.getSize());
+        
+       
         this.desktopPane.add(frm);
-//        if(Auth.isManager())
-//        {
-//            btnQuanLy.setVisible(true);
-//        }
-//        else
-//            btnQuanLy.setVisible(false);
+         frm.setVisible(true);
+        if(Auth.isManager())
+        {
+            btnQuanLy.setVisible(true);
+        }
+        else
+            btnQuanLy.setVisible(false);
     }
 
     /**
@@ -68,11 +70,10 @@ public class frmMain extends javax.swing.JFrame {
         copyMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(56, 13));
+        setUndecorated(true);
 
         desktopPane.setPreferredSize(new java.awt.Dimension(1154, 623));
 
@@ -165,6 +166,11 @@ public class frmMain extends javax.swing.JFrame {
         copyMenuItem.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-logout-20.png")); // NOI18N
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Đăng xuất");
+        copyMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(copyMenuItem);
 
         menuBar.add(editMenu);
@@ -179,17 +185,15 @@ public class frmMain extends javax.swing.JFrame {
         });
         menuBar.add(jMenu2);
 
+        helpMenu.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-restaurant-menu-30.png")); // NOI18N
         helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
-
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
-
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
-
+        helpMenu.setText("Tác vụ");
+        helpMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        helpMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                helpMenuMouseClicked(evt);
+            }
+        });
         menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
@@ -210,9 +214,9 @@ public class frmMain extends javax.swing.JFrame {
 
     private void menuItemQLFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuItemQLFoodMouseClicked
         frmQLThucDon frm = new frmQLThucDon();
+        frm.setMaximizable(true);
+        frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
-        frm.setBounds(50, 50, 500, 400);
-        frm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frm.setLayout(new BorderLayout());
         this.desktopPane.add(frm);
     }//GEN-LAST:event_menuItemQLFoodMouseClicked
@@ -221,9 +225,8 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmQLThucDon frm = new frmQLThucDon();
-        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_menuItemQLFoodActionPerformed
@@ -231,9 +234,8 @@ public class frmMain extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         desktopPane.removeAll();
         frmQLNhanVien frm = new frmQLNhanVien();
-        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -242,9 +244,8 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmQLHangHoa frm = new frmQLHangHoa();
-        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_saveMenuItemActionPerformed
@@ -257,16 +258,15 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         frmInformationAccount frm=new frmInformationAccount();
         frm.setVisible(true);
-       frm.setLocationRelativeTo(null);
+        frm.setLocationRelativeTo(null);
     }//GEN-LAST:event_cutMenuItemActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         // TODO add your handling code here
         desktopPane.removeAll();
         frmDatBan frm = new frmDatBan();
-        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_jMenu2MouseClicked
@@ -275,9 +275,8 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmQLDoanhThu frm = new frmQLDoanhThu();
-        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
@@ -286,12 +285,28 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmQLBanAn frm = new frmQLBanAn();
-        frm.pack();
         frm.setMaximizable(true);
-        frm.getContentPane().setPreferredSize(new Dimension(100, 100));
+        frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         this.desktopPane.add(frm);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void helpMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMenuMouseClicked
+        // TODO add your handling code here:
+        desktopPane.removeAll();
+        frmOrder frm = new frmOrder();
+        frm.setMaximizable(true);
+        frm.setSize(desktopPane.getSize());
+        frm.setVisible(true);
+        this.desktopPane.add(frm);
+    }//GEN-LAST:event_helpMenuMouseClicked
+
+    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
+        // TODO add your handling code here:
+        frmLogin frm=new frmLogin();
+        frm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_copyMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,9 +344,7 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenu btnQuanLy;
-    private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane desktopPane;

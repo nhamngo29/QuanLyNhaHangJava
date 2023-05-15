@@ -264,7 +264,7 @@ public class frmDatBan extends javax.swing.JInternalFrame {
         pmenu.add(pmenuEdit);
 
         setClosable(true);
-        setTitle("Quản lý sản phẩm");
+        setTitle("Đặt bàn");
 
         cboNgayDat.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cboNgayDat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngày đặt", "Mới nhất ↓", "Cũ nhất  ↑" }));
@@ -349,7 +349,7 @@ public class frmDatBan extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExportEx, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addComponent(btnExportEx, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -499,7 +499,7 @@ public class frmDatBan extends javax.swing.JInternalFrame {
                     .addComponent(btnInsert)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cập nhật", jPanel1);

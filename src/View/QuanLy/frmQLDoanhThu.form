@@ -30,7 +30,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -76,7 +80,7 @@
                               <Component id="dtcTo" min="-2" pref="150" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                               <Component id="btnXem" min="-2" pref="98" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="357" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="txtTong1" min="-2" pref="106" max="-2" attributes="0"/>
@@ -146,12 +150,12 @@
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="dtcFrom">
               <Properties>
-                <Property name="dateFormatString" type="java.lang.String" value="dd / MM / YYYY"/>
+                <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="dtcTo">
               <Properties>
-                <Property name="dateFormatString" type="java.lang.String" value="dd / MM / YYYY"/>
+                <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
@@ -245,7 +249,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="379" max="32767" attributes="0"/>
+                      <EmptySpace pref="367" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -303,14 +307,6 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JYearChooser" name="TrongNam">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="0" type="rgb"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="14" style="1"/>
-                </Property>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnXem1">
               <Properties>
@@ -341,7 +337,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="1106" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="1094" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">

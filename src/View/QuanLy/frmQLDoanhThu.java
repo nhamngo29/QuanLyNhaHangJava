@@ -56,6 +56,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Image;
 import java.awt.Desktop;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.logging.Level;
@@ -169,9 +170,9 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel1.setText("Từ:");
 
-        dtcFrom.setDateFormatString("dd / MM / YYYY");
+        dtcFrom.setDateFormatString("dd/MM/yyyy");
 
-        dtcTo.setDateFormatString("dd / MM / YYYY");
+        dtcTo.setDateFormatString("dd/MM/yyyy");
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel6.setText("Đến:");
@@ -240,7 +241,7 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
                         .addComponent(dtcTo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
                         .addComponent(btnXem, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 369, Short.MAX_VALUE))
+                        .addGap(0, 357, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(txtTong1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
@@ -275,9 +276,6 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel2.setText("Chọn Năm : ");
 
-        TrongNam.setForeground(new java.awt.Color(0, 0, 0));
-        TrongNam.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
         btnXem1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-eye-30.png")); // NOI18N
         btnXem1.setText("Xem");
         btnXem1.addActionListener(new java.awt.event.ActionListener() {
@@ -293,7 +291,7 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
         jpnItem.setLayout(jpnItemLayout);
         jpnItemLayout.setHorizontalGroup(
             jpnItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1106, Short.MAX_VALUE)
+            .addGap(0, 1094, Short.MAX_VALUE)
         );
         jpnItemLayout.setVerticalGroup(
             jpnItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,7 +311,7 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(379, Short.MAX_VALUE)
+                .addContainerGap(367, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -355,7 +353,10 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,8 +389,10 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
         txtTong.setText(x.format(Tong) + " VNĐ");
     }
     private void btnXemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemActionPerformed
-        Date jCalDate1 = dtcFrom.getDate();
-        Date jCalDate2 = dtcTo.getDate();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+        Date jCalDate1=dtcFrom.getDate();
+        Date jCalDate2=dtcTo.getDate();
+        System.out.println("date to");
         if (dao.FIND_TongTien(jCalDate1, jCalDate2) == null)
             MsgBox.alert(this, "Những ngày này không có giao dịch ");
         else {
