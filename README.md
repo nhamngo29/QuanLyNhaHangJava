@@ -253,31 +253,50 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
 ### 2.3.2	Giao diện mockup:
 
 - Login
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/8c4015ab-cb44-4103-987a-8b31d58b078c)
+
 - Order
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/e8575dc4-06f2-40e5-9014-4275f3168f66)
+
 - Quản lý doanh thu
+
   - Danh sách,biểu đồ
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/453352de-08f0-4cf6-a9ba-d041ee80bdf6)
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4c6e252e-b318-4e7a-91b3-2f44861cbebf)
+
 - Quản lý bàn
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/73f56e25-91ad-4e1d-ad8a-5a8848e438de)
+
 - Quản lý nhân viên
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4acc34b3-4bbf-47ba-8520-bd08a798205c)
+
 - Quản lý nhập xuất kho :
  - Danh sách,Cập nhật
+ 
   ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/bbb161b2-85cf-466b-8d8a-79e625cc7cb2)
+  
   ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/0c201818-457c-46c3-9f05-84c91aee2af9)
+  
   - Phiếu xuất hàng
+ 
   ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/34a659b1-06dc-49c8-aec1-f7140f68c723)
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/680dc1fc-78cf-4303-941b-3b9ba1b5530e)
-   - Phiếu nhập hàng
-  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/cb1b0327-3f43-4047-bc66-90ea47b4c6be)
+  
 - Quản lý thực đơn
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/df99dad2-954e-48e9-80eb-07c0c84a049e)
+
 - Thông tin tài khoản
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/76952900-27e1-4778-ba9f-c6ffeeecaf23)
+
 - Đổi mật khẩu
+
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/c1c692df-e95b-4e4b-b57b-2932daf8c583)
 
 <a name="KiemThu"></a>
