@@ -97,7 +97,7 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 ### 1.3	USE CASE
 
   Use case là sơ đồ tổng quan về mặt chức năng và phân vai trò người sử dụng. Dựa vào yêu cầu hệ thống của khách hàng, chúng ta có thể phác thảo sơ đồ use case như sau.
-  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4814ab30-47de-4fda-a47f-b4edd3120faf)
+  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/fe1fe495-1067-4197-b1f2-253c1696a323)
 - CHI TIẾT CÁC CHỨC NĂNG
     - Mỗi chức năng quản lý bao gồm các chức năng con
       - Xem: xem tất cả và chi tiết một mục
@@ -150,7 +150,7 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 ### 2.1	MÔ HÌNH TRIỂN KHAI
 
 Ứng dụng phần mềm được xây dựng để phục vụ cho nhiều người dùng nhưng cơ sở dữ liệu thì lưu trữ tập trung.
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4d370b01-7abc-4c44-88a7-9c8d1b0fb34e)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/dd19ca7a-5b5f-478b-b4db-d09636e792c7)
 - Cần một máy cài SQL Server 2008+. Máy này cần hệ điều hành window xp trở lên
 -	Các máy nhân viên phòng đào tạo cài phần mềm edusys. Các máy nhân viên cần JDK 1.8+ với hệ điều hành bất ký
 <a name="ThietKeCSDL"></a>
@@ -160,8 +160,8 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 #### 2.2.1	Sơ đồ quan hệ thực thể
 
 ##### *2.2.1.1	ERD Diagram level 1*
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6185eaf8-459c-40a5-a461-7eb00f115a87)
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/ace257a6-5770-4972-b2b6-3546837425d3)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/bcbd3a29-0746-4f9f-8fe3-17d1b179b728)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/505490d1-131f-4c0c-9b51-77661717d254)
 <a name="ThietKeChiTietCacThucThe"></a>
 #### 2.2.2	Thiết kế chi tiết các thực thể
 
@@ -248,59 +248,38 @@ Phần mềm quản lý nhà hàng, quán ăn, quán cafe...`Restaurant Victory`
 Giao diện chính là một cửa sổ chứa menu chính và toolbar. Thông qua đó để đi đến các giao diện thành viên để thực hiện các chức năng trong hệ thống.
 Theo yêu cầu thì mọi nhân viên phải đăng nhập trước khi sử dụng ứng dụng nên form đăng nhập xuất hiện trước để yêu cầu đăng nhập.
 Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một màn hình chào cùng với thanh tiến trình để người có cảm giác ứng dụng đang khởi động.
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/44b39c9f-426c-4d60-860a-bda666805e35)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/96d120fd-07c6-401f-8e2f-fd2cd84d4927)
 <a name="GiaoDien"></a>
 ### 2.3.2	Giao diện mockup:
 
 - Login
-
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6bf72fd9-0bd6-460a-add2-79cd90290f1d)
-
-- Menu và bàn
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/2f733af2-2725-4f91-acb3-908a5d027410)
-
-
-
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/8c4015ab-cb44-4103-987a-8b31d58b078c)
+- Order
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/e8575dc4-06f2-40e5-9014-4275f3168f66)
 - Quản lý doanh thu
-  - Danh sách
-  
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/40f55fb8-4007-45c8-8376-a87cca6939d4)
-
-  - Biểu đồ
-  
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/f20f5aec-1811-4f05-bcc9-3483cb0b22c1)
-
+  - Danh sách,biểu đồ
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/453352de-08f0-4cf6-a9ba-d041ee80bdf6)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4c6e252e-b318-4e7a-91b3-2f44861cbebf)
 - Quản lý bàn
-
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/374d33ac-8477-4008-a098-8465eb915b2f)
-
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/73f56e25-91ad-4e1d-ad8a-5a8848e438de)
 - Quản lý nhân viên
-
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/1fb47ee0-920c-412e-a2ce-5b1fd33493e9)
-
-- Quản lý nhập xuất kho
-
-  - Danh sách
-  
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/fb018b59-36ba-4637-9a9c-4bd4f97d64bc)
-
-   - Cập nhật
-
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/4acc34b3-4bbf-47ba-8520-bd08a798205c)
+- Quản lý nhập xuất kho :
+ - Danh sách,Cập nhật
+  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/bbb161b2-85cf-466b-8d8a-79e625cc7cb2)
+  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/0c201818-457c-46c3-9f05-84c91aee2af9)
+  - Phiếu xuất hàng
+  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/34a659b1-06dc-49c8-aec1-f7140f68c723)
 ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/680dc1fc-78cf-4303-941b-3b9ba1b5530e)
-
    - Phiếu nhập hàng
-
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/cb1b0327-3f43-4047-bc66-90ea47b4c6be)
-
+  ![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/cb1b0327-3f43-4047-bc66-90ea47b4c6be)
 - Quản lý thực đơn
-
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/75a5778c-8cca-4197-86ac-0883ed840fc0)
-
-
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/df99dad2-954e-48e9-80eb-07c0c84a049e)
 - Thông tin tài khoản
-
-
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/76952900-27e1-4778-ba9f-c6ffeeecaf23)
 - Đổi mật khẩu
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/c1c692df-e95b-4e4b-b57b-2932daf8c583)
+
 <a name="KiemThu"></a>
 ## III	KIỂM THỬ
 
