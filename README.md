@@ -305,28 +305,28 @@ Ngoài ra mỗi ứng dụng trong thời gian khởi động cần có một m�
 
 -	KIỂM THỬ FORM QUẢN LÝ NHÂN VIÊN
 
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6ceb22c6-76f1-41f6-aa7a-e6bbf3c28c3a)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/6f2eb7b9-c123-4b46-a834-c5d4fe71df91)
 
 -	KIỂM THỬ FORM QUẢN LÝ ĐẶT BÀN
 
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/acf81800-808a-4c10-9606-3e0c8681f1bc)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/91c57f71-4742-41f3-95a7-c60d161140a6)
 
 -	KIỂM THỬ FORM QUẢN LÝ THỰC ĐƠN
 
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/0bbf69bc-0c61-47fd-9b28-0819fade4615)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/ca6a7948-d516-4439-b4ca-4769860030cc)
 
 -	KIỂM THỬ FORM QUẢN LÝ DOANH THU THEO NGÀY
 
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/81f8cf17-9f11-4440-8202-557cea2fdb1b)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/153a91d3-cf2a-4e2a-b240-a80611824b82)
  
 
 -	KIỂM THỬ FORM LOGIN
 
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/17f5ef55-86e9-4361-8f3f-98e1174f9750)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/e66ac5ae-1841-4d0f-b084-909511ed3cc5)
 
 -	KIỂM THỦ FORM ĐỔI MẬT KHẨU
 
-![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/ae8ab889-9575-485b-9d4c-a8aadbaaf95f)
+![image](https://github.com/nhamngo29/QuanLyNhaHangJava/assets/107678223/9f5cf83e-da80-4091-b1d8-cbefb14a6e75)
 
 <a name="DongGoiVaTrienKhai"></a>
 ## IV	ĐÓNG GÓI VÀ TRIỂN KHAI
