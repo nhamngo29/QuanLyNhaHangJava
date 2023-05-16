@@ -96,9 +96,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
 
     public frmQLThucDon() {
         initComponents();
-        tb.getColumnModel().getColumn(4).setWidth(0);
-        tb.getColumnModel().getColumn(4).setMinWidth(0);
-        tb.getColumnModel().getColumn(4).setMaxWidth(0);
+        
         cboLoai.setRenderer(new MyComboBoxRenderer("Vui lòng chọn loại đồ ăn"));
         cboLoai.setSelectedIndex(-1);
         Enable(true);
@@ -109,6 +107,9 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
         fillToTable(dao.selectAll());
         loadToCbo();
         selectTable();
+        tb.getColumnModel().getColumn(4).setWidth(0);
+        tb.getColumnModel().getColumn(4).setMinWidth(0);
+        tb.getColumnModel().getColumn(4).setMaxWidth(0);
     }
 
     ThucDon getForm() {

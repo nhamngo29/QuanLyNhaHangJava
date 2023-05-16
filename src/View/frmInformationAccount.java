@@ -6,6 +6,9 @@ package View;
 
 import UIS.Auth;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -17,10 +20,10 @@ public class frmInformationAccount extends javax.swing.JDialog {
      * Creates new form frmInformationAccount
      */
     public frmInformationAccount(java.awt.Frame parent, boolean modal) {
-       
+
         super(parent, modal);
         initComponents();
-        
+
     }
 
     public frmInformationAccount() {
@@ -30,15 +33,23 @@ public class frmInformationAccount extends javax.swing.JDialog {
         txtMaNV.setText(Auth.user.getMaNV());
         txtHoTen.setText(Auth.user.getHoTen());
         txtGioiTinh.setText("Nữ");
-        if(Auth.user.isGioiTinh())
-        {
+        if (Auth.user.isGioiTinh()) {
             txtGioiTinh.setText("Nam");
         }
         txtChucVu.setText(Auth.user.getChucVu());
         txtSDT.setText(Auth.user.getSoDT());
-        
+        int width = 200; // chiều rộng mong muốn của JLabel
+        int height = 200; // chiều cao mong muốn của JLabel
+        Image img = loadImage(String.valueOf(Auth.user.getAvatar())).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        lbImg.setIcon(new ImageIcon(img));
     }
-    
+
+    private ImageIcon loadImage(String tenHinh) {
+
+        ImageIcon ii = new ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\" + tenHinh);
+        return ii;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,25 +86,35 @@ public class frmInformationAccount extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin"));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Mã nhân viên:");
 
         txtMaNV.setEditable(false);
+        txtMaNV.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Họ tên:");
 
         txtHoTen.setEditable(false);
+        txtHoTen.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         txtSDT.setEditable(false);
+        txtSDT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Số điện thoại");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Chức vụ:");
 
         txtChucVu.setEditable(false);
+        txtChucVu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Giới tính:");
 
         txtGioiTinh.setEditable(false);
+        txtGioiTinh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Avatar"));
 
@@ -113,6 +134,7 @@ public class frmInformationAccount extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        btnChangePassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnChangePassword.setText("Thay đổi mật khẩu");
         btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,9 +181,9 @@ public class frmInformationAccount extends javax.swing.JDialog {
                             .addComponent(txtSDT, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtHoTen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMaNV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+                .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +216,7 @@ public class frmInformationAccount extends javax.swing.JDialog {
                             .addComponent(jLabel5)
                             .addComponent(jLabel10)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
+                        .addGap(35, 35, 35)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(btnChangePassword, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,7 +246,7 @@ public class frmInformationAccount extends javax.swing.JDialog {
                         .addGap(81, 81, 81)
                         .addComponent(jLabel11))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,17 +267,17 @@ public class frmInformationAccount extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         this.dispose();
-        
+
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
         // TODO add your handling code here:
-        frmChangePassword frm=new frmChangePassword();
+        frmChangePassword frm = new frmChangePassword();
         frm.setLocationRelativeTo(null);
         frm.pack();
         frm.getContentPane().setPreferredSize(new Dimension(100, 100));
         frm.setVisible(true);
-        
+
     }//GEN-LAST:event_btnChangePasswordActionPerformed
 
     /**

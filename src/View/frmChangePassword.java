@@ -54,17 +54,17 @@ public class frmChangePassword extends javax.swing.JDialog {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\logo.png")); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Mật khẩu cũ");
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Mật khẩu mới");
 
         jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
 
         jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Nhập lại mật khẩu");
 
         jSeparator5.setForeground(new java.awt.Color(255, 255, 255));
@@ -77,6 +77,7 @@ public class frmChangePassword extends javax.swing.JDialog {
             }
         });
 
+        cbShowPass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         cbShowPass.setText("Show password");
         cbShowPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,7 +156,7 @@ public class frmChangePassword extends javax.swing.JDialog {
                 .addComponent(cbShowPass)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnChangePass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 47, Short.MAX_VALUE))
+                .addGap(0, 34, Short.MAX_VALUE))
         );
 
         pack();
@@ -163,15 +164,15 @@ public class frmChangePassword extends javax.swing.JDialog {
 
     private void btnChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePassActionPerformed
         // TODO add your handling code here:
-         MsgBox.alert(this, MD5.getMd5(txtOldPass.getText()));
-          MsgBox.alert(this, Auth.user.getMatKhau());
         if(MD5.getMd5(txtOldPass.getText()).equals(Auth.user.getMatKhau()))
         {
             if(txtPassNew.getText().equals(txtPassAgin.getText()))
             {
-                Auth.user.setMatKhau(txtPassNew.getText());
-                dao.insertOrUpdate(Auth.user);
-                MyDialog dlg = new MyDialog("Thay đổi mật khẩu thành công!", MyDialog.SUCCESS_DIALOG);
+                
+                dao.changePass(Auth.user.getMaNV(),MD5.getMd5(txtPassNew.getText()));
+                new MyDialog("Thay đổi mật khẩu thành công!", MyDialog.SUCCESS_DIALOG);
+                
+                
             }
             else{
                 MsgBox.alert(this, "Mật khẩu không khớp");

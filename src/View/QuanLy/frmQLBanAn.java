@@ -117,8 +117,8 @@ public class frmQLBanAn extends javax.swing.JInternalFrame {
         try {
             BanAn td = new BanAn();
             td.setMaBan(Integer.parseInt(txtID.getText()));
-            td.setLoaiBan(Integer.parseInt(txtSearch.getText()));
-            td.setTrangThai(txtStt.getSelectedItem() + "");
+            td.setLoaiBan(Integer.parseInt(txtNam.getText()));
+            td.setTrangThai(txtStt.getSelectedItem()+ "");
             return td;
         } catch (Exception e) {
             MyDialog dlg = new MyDialog("Sai dữ liệu vui lòng kiệm tra lại", ERROR);

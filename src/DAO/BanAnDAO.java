@@ -23,7 +23,7 @@ public class BanAnDAO extends NhaHangDAO<BanAn, Integer>{
     @Override
     public void insertOrUpdate(BanAn entity) {
        try {
-            DataProvider.update(INSERT_OR_UPDATE_SQL, entity);
+            DataProvider.update(INSERT_OR_UPDATE_SQL, entity.getMaBan(),entity.getLoaiBan(),entity.getTrangThai());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

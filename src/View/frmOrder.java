@@ -67,6 +67,8 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
     public frmOrder() {
 
         initComponents();
+        cboBanAn.setRenderer(new MyComboBoxRenderer("Vui lòng chọn bàn"));
+        cboBanAn.setSelectedIndex(-1);
         dao = new HoaDonDAO();
         daoLoaiThucDon = new LoaiThucDonDAO();
         daoThucDon = new ThucDonDAO();
@@ -85,6 +87,9 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
         XuKienSelectcboLoaiThucDon();
         XuKienSelectcboThucDon();
         selectTable();
+        tblCacMonDaGoi.getColumnModel().getColumn(4).setWidth(0);
+        tblCacMonDaGoi.getColumnModel().getColumn(4).setMinWidth(0);
+        tblCacMonDaGoi.getColumnModel().getColumn(4).setMaxWidth(0);
     }
 
     public void loadLoaiMonAn() {
@@ -253,17 +258,17 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
 
         tblCacMonDaGoi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Tên món", "Đơn giá", "Số lượng", "Thành tiền", "ID", "IDTD"
+                "Tên món", "Đơn giá", "Số lượng", "Thành tiền", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -530,6 +535,8 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
     void clear() {
         cboLoaiThucDon.setSelectedIndex(-1);
         cboThucDon.setSelectedIndex(-1);
+        cboBanAn.setSelectedIndex(-1);
+        
         spinSoLuong.setValue(1);
         lblSoBan.setText(0 + "");
     }
@@ -588,6 +595,7 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
                 button.setIcon(new ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\ico_trong.png"));
             } else if (ba.getTrangThai().equals("Hư")) {
                 button.setIcon(new ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\ico_hu.png"));
+                button.setEnabled(false);
             }
             button.addActionListener(new ActionListener() {
                 @Override
@@ -607,6 +615,7 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
                     }
                 }
             });
+            cboBanAn.setSelectedIndex(-1);
             button.addActionListener(this);
             pnBanAn.add(button);
         }
@@ -641,7 +650,8 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
         DefaultTableModel model = (DefaultTableModel) tblCacMonDaGoi.getModel();
         model.setRowCount(0);
         for (ChiTietHoaDon cthd : lcthd) {
-            model.addRow(new Object[]{daoThucDon.selectById(cthd.getMaMon()), cthd.getGiatien(), cthd.getSoLuong(), (cthd.getGiatien() * cthd.getSoLuong()), cthd.getMaCTHD()});
+            DecimalFormat x = new DecimalFormat("###,###,### VND");
+            model.addRow(new Object[]{daoThucDon.selectById(cthd.getMaMon()), x.format(cthd.getGiatien()), cthd.getSoLuong(), x.format((cthd.getGiatien() * cthd.getSoLuong())), cthd.getMaCTHD()});
         }
     }
 
@@ -671,6 +681,7 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
                 int tb2 = a.getMaBan();
                 dao.SwithTable(tb1, tb2);
                 loadTable();
+                clear();
             }
         }
 
@@ -724,9 +735,7 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
                     });
                 }
             }
-        }
-        else
-        {
+        } else {
             MsgBox.alert(this, "Bàn không có hóa đơn!");
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -762,6 +771,7 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
                 int tb2 = a.getMaBan();
                 dao.GopTable(tb1, tb2);
                 loadTable();
+                clear();
             }
         }
 
