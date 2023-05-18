@@ -7,6 +7,7 @@ package DAO;
 import POJO.HoaDon;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,18 +16,50 @@ import java.util.logging.Logger;
  *
  * @author Nham Ngo
  */
-public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
-    String INSERT_SQL = "INSERT INTO HoaDon(NgayTao, MaNV, MaBan, TongTien,TrangThai)VALUES(?,?,?,?,?)";
+public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer> {
+
+    String INSERT_SQL = "{CALL InsertHD(?,?)}";
     String DELETE_SQL = "DELETE FROM HoaDon WHERE MaHD =?";
+    String SELECT_BY_BAN="SELECT * FROM HoaDon WHERE TrangThai=N'Chưa thanh toán' AND MaBan =?";
     String SELECT_ALL_SQL = "SELECT * FROM HoaDon";
     String SELETE_BY_ID_SQL = "SELECT * FROM HoaDon WHERE MaHD =?";
+
     String select_Poc_TrangThai = "{CALL sp_NVbyHD(?)}";
-    String select_Poc_TrangThai_MABan = "{CALL sp_NVSoBanbyHD(?,?)}";
+    String UPATE_TRANG_THAI = "{CALL SP_UpdateTrangThaiByID(?)}";
     String select_Poc_3 = "{CALL sp_SoSanhNgay(?)}";
     String UPDATE_TT = "UPDATE HoaDon SET TrangThai=?, TongTien =? where MaHD = ?";
     String Chart = "select sum(tongtien) as 'tongTien'\n"
             + "from hoadon\n"
             + "where month(ngaytao)= ? and YEAR(NgayTao) = ?";
+    String FIND_BY_SQL = "{CALL SP_XuatHoaDonTheoNgay (? , ?) }";
+    String SELECT_YEAR = "{CALL usp_SelectDoanhThuTheoNam ( ? ) }";
+    String SELECT_ROW_LAST="Select top 1* from HoaDon Order By MaHD DESC";
+    String SWITCH_TABLE="{CALL SP_SwitchTable(?,?)}";
+    String GOP_TABLE="{CALL SP_BillardTable(?,?)}";
+    public void SwithTable(int tb1,int tb2)
+    {
+        try {
+            DataProvider.update(SWITCH_TABLE, tb1,tb2);
+        } catch (Exception ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void GopTable(int tb1,int tb2)
+    {
+        try {
+            DataProvider.update(GOP_TABLE, tb1,tb2);
+        } catch (Exception ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public List<HoaDon> FIND_TongTien(Date TuNgay, Date DenNgay) {
+        System.out.println(TuNgay+"");
+        List<HoaDon> list = this.selectBySql(FIND_BY_SQL, TuNgay, DenNgay);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list;
+    }
 
     @Override
     public void insertOrUpdate(HoaDon entity) {
@@ -37,6 +70,15 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
         }
     }
 
+    public void Insert(String MaNV, int MaBan) {
+        try {
+            DataProvider.update(INSERT_SQL, MaNV, MaBan);
+        } catch (Exception ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
     @Override
     public void delete(Integer id) {
         try {
@@ -54,7 +96,13 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
         }
         return list.get(0);
     }
-
+    public HoaDon selectByIDBan(Integer id) {
+        List<HoaDon> list = this.selectBySql(SELECT_BY_BAN, id);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
     @Override
     public List<HoaDon> selectAll() {
         return this.selectBySql(SELECT_ALL_SQL);
@@ -68,15 +116,14 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
         return this.selectBySqll(select_Poc_TrangThai, TrangThai);
     }
 
-    public List<HoaDon> selectAllProcL2(String TrangThai, int MaBan) {
-        return this.selectBySql(select_Poc_TrangThai_MABan, TrangThai, MaBan);
+    public List<HoaDon> UpdateTrangThai(int id) {
+        return this.selectBySql(UPATE_TRANG_THAI, id);
     }
 
     public List<HoaDon> selectAllProcL3(String ngayHT) {
         return this.selectBySql(select_Poc_3, ngayHT);
     }
 
-    
     public List<HoaDon> selectByTang() {
         String sql = "select MaHD, hd.MaNV , HoTen, NgayTao, TongTien, MaBan,TrangThai\n"
                 + "from HoaDon HD inner join NHANVIEN NV on HD.MaNV = NV.MaNV order by NgayTao desc";
@@ -84,8 +131,8 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
     }
 
     public List<HoaDon> selectByGiam() {
-        String sql = "select MaHD, hd.MaNV , HoTen, NgayTao, TongTien, MaBan,TrangThai\n" +
-"from HoaDon HD inner join NHANVIEN NV on HD.MaNV = NV.MaNV order by NgayTao asc";
+        String sql = "select MaHD, hd.MaNV , HoTen, NgayTao, TongTien, MaBan,TrangThai\n"
+                + "from HoaDon HD inner join NHANVIEN NV on HD.MaNV = NV.MaNV order by NgayTao asc";
         return this.selectBySql(sql);
     }
 
@@ -130,7 +177,7 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
                 enity.setTongTien(rs.getFloat("TongTien"));
                 enity.setMaNV(rs.getString("MaNV"));
                 enity.setTenNV(rs.getString("HoTen"));
-                enity.setNgayTao(rs.getString("NgayTao")); //xem lại
+                enity.setNgayTao(rs.getString("NgayTao")); 
                 enity.setTrangThai(rs.getString("TrangThai"));
                 list.add(enity);
             }
@@ -139,6 +186,15 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<HoaDon> SelectYear(int Nam) {
+        List<HoaDon> list = this.selectBySql(SELECT_YEAR, Nam);
+        if (list.isEmpty()) {
+
+            return null;
+        }
+        return list;
     }
 
     protected List<HoaDon> selectBySqlChart(String sql, Object... args) {
@@ -157,6 +213,14 @@ public class HoaDonDAO extends NhaHangDAO<HoaDon, Integer>{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public HoaDon SelectLastRow()
+    {
+        List<HoaDon> list = this.selectBySql(SELECT_ROW_LAST);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
 }

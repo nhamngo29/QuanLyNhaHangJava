@@ -13,6 +13,11 @@ public class BanAn {
     private int LoaiBan;
     private String TrangThai;
     private String GhiChu;
+
+    @Override
+    public String toString() {
+        return "Bàn " + MaBan + " - Trạng thái " + TrangThai;
+    }
     public BanAn() {
     }
 

@@ -25,6 +25,8 @@ import java.awt.Color;
 import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,18 +52,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -80,14 +78,26 @@ public class frmDatBan extends javax.swing.JInternalFrame {
     public frmDatBan() {
         initComponents();
         dao = new DatBanDAO();
-        daoNV=new NhanVienDAO();
-        if(dao.selectAll()!=null)
-        {
+        daoNV = new NhanVienDAO();
+        if (dao.selectAll() != null) {
             fillToTable(dao.selectAll());
         }
+        order();
         Enable(true);
         EnableText(false);
         selectTable();
+    }
+
+    void order() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblDatBan.getModel());
+        tblDatBan.setRowSorter(sorter);
+        tblDatBan.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = tblDatBan.columnAtPoint(e.getPoint());
+                sorter.toggleSortOrder(column);
+                sorter.sort();
+            }
+        });
     }
 
     DatBan getForm() {
@@ -105,12 +115,13 @@ public class frmDatBan extends javax.swing.JInternalFrame {
 
     void InsertOrUpdate() {
         DatBan td = getForm();
-        System.out.println("MaNV"+td.getMaNV());
+        System.out.println("MaNV" + td.getMaNV());
         dao.insertOrUpdate(td);
         fillToTable(dao.selectAll());
         this.clearForm(); // xóa trắng form
         MsgBox.alert(this, "Thêm mới,update thành công!");
     }
+
     void selectTable() {
         tblDatBan.setCellSelectionEnabled(true);
         ListSelectionModel select = tblDatBan.getSelectionModel();
@@ -119,20 +130,20 @@ public class frmDatBan extends javax.swing.JInternalFrame {
             public void valueChanged(ListSelectionEvent e) {
                 int row = tblDatBan.getSelectedRow();
                 if (row >= 0) {
-                    txtTenKH.setText((String)tblDatBan.getValueAt(row, 1));
+                    txtTenKH.setText((String) tblDatBan.getValueAt(row, 1));
 
-                        txtDataDat.setDate((Date) tblDatBan.getModel().getValueAt(row, 3));
-                   
-                    
-                    txtTGDat.setText((String)tblDatBan.getValueAt(row, 4));
+                    txtDataDat.setDate((Date) tblDatBan.getModel().getValueAt(row, 3));
+
+                    txtTGDat.setText((String) tblDatBan.getValueAt(row, 4));
                     txtSDT.setText(String.valueOf(tblDatBan.getValueAt(row, 2)));
-                    txtMaBan.setText(tblDatBan.getValueAt(row, 0)+"");
-                    txtSoNguoi.setText(tblDatBan.getValueAt(row, 5)+"");
-                    txtGhiChu.setText((String)tblDatBan.getValueAt(row, 6));
+                    txtMaBan.setText(tblDatBan.getValueAt(row, 0) + "");
+                    txtSoNguoi.setText(tblDatBan.getValueAt(row, 5) + "");
+                    txtGhiChu.setText((String) tblDatBan.getValueAt(row, 6));
                 }
             }
         });
     }
+
     void clearForm() {
         txtMaBan.setText("");
         txtTenKH.setText("");
@@ -175,23 +186,22 @@ public class frmDatBan extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Bạn chưa nhập giờ gian!");
             return false;
         }
-        if(txtSDT.getText().isEmpty())
-        {
-             MsgBox.alert(this, "Bạn chưa nhập sdt khách hàng!");
+        if (txtSDT.getText().isEmpty()) {
+            MsgBox.alert(this, "Bạn chưa nhập sdt khách hàng!");
             return false;
-        }
-        else if(txtSDT.getText().length()==9)
-        {
+        } else if (txtSDT.getText().length() == 9) {
             MsgBox.alert(this, "SDT phải là 9 số");
             return false;
         }
-        
+
         return true;
     }
+
     private void xuLyXuatFileExcel() {
         XuLyFileExcel xuatFile = new XuLyFileExcel();
         xuatFile.xuatExcel(tblDatBan);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -253,8 +263,8 @@ public class frmDatBan extends javax.swing.JInternalFrame {
         });
         pmenu.add(pmenuEdit);
 
-        setClosable(true);
-        setTitle("Quản lý sản phẩm");
+        setResizable(true);
+        setTitle("ĐẶT BÀN");
 
         cboNgayDat.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cboNgayDat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngày đặt", "Mới nhất ↓", "Cũ nhất  ↑" }));
@@ -339,7 +349,7 @@ public class frmDatBan extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExportEx, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addComponent(btnExportEx, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -489,7 +499,7 @@ public class frmDatBan extends javax.swing.JInternalFrame {
                     .addComponent(btnInsert)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cập nhật", jPanel1);
@@ -518,7 +528,7 @@ public class frmDatBan extends javax.swing.JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) tblDatBan.getModel();
         model.setRowCount(0);
         for (DatBan p : a) {
-            
+
             model.addRow(new Object[]{p.getMaDatBan(), p.getHoTenKH(), p.getSDTKH(), p.getNgayDatBan(), p.getGioDat(), p.getSoNguoi(), p.getGhiChu(), daoNV.selectById(p.getMaNV())});
             System.out.println(p.getMaNV());
         }
@@ -561,16 +571,15 @@ public class frmDatBan extends javax.swing.JInternalFrame {
 
     private void pmenuRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pmenuRemoveMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_pmenuRemoveMouseClicked
 
     private void pmenuRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmenuRemoveActionPerformed
         // TODO add your handling code here:
         int row = tblDatBan.getSelectedRow();
-        String TenKH=tblDatBan.getValueAt(row, 1).toString();
-        int MaKH=Integer.parseInt(tblDatBan.getValueAt(row, 0).toString());
-        if(MsgBox.confirm(this, "Bạn có chắn muốn xóa đắt bàn của khách hàng "+TenKH))
-        {
+        String TenKH = tblDatBan.getValueAt(row, 1).toString();
+        int MaKH = Integer.parseInt(tblDatBan.getValueAt(row, 0).toString());
+        if (MsgBox.confirm(this, "Bạn có chắn muốn xóa đắt bàn của khách hàng " + TenKH)) {
             dao.delete(MaKH);
             fillToTable(dao.selectAll());
         }
@@ -584,18 +593,18 @@ public class frmDatBan extends javax.swing.JInternalFrame {
 
     private void cboNgayDatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboNgayDatItemStateChanged
         // TODO add your handling code here:
-        if(evt.getStateChange()==java.awt.event.ItemEvent.SELECTED)
-        {
-            if(cboNgayDat.getSelectedIndex()==0)
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+            if (cboNgayDat.getSelectedIndex() == 0) {
                 fillToTable(dao.selectByTang());
-            else
+            } else {
                 fillToTable(dao.selectByGiam());
+            }
         }
-        
+
     }//GEN-LAST:event_cboNgayDatItemStateChanged
 
     private void btnExportExActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportExActionPerformed
-       xuLyXuatFileExcel();
+        xuLyXuatFileExcel();
     }//GEN-LAST:event_btnExportExActionPerformed
 
     private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked

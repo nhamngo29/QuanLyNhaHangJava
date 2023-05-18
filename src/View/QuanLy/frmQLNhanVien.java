@@ -18,7 +18,12 @@ import UIS.MsgBox;
 import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -37,6 +42,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -59,6 +66,8 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
 
     //Clear
     void clearForm() {
+
+
         txtMaNV.setText("");
         txtTenNV.setText("");
         grbSex.clearSelection();
@@ -81,30 +90,58 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     //Sữa
 
     public frmQLNhanVien() {
+        
         initComponents();
+        
         tb.getColumnModel().getColumn(6).setWidth(0);
         tb.getColumnModel().getColumn(6).setMinWidth(0);
         tb.getColumnModel().getColumn(6).setMaxWidth(0);
         cboChucVu.setRenderer(new MyComboBoxRenderer("Vui lòng chọn chức vụ"));
         cboChucVu.setSelectedIndex(-1);
+        order();
         Enable(true);
         EnableText(false);
         dao = new NhanVienDAO();
         ltdDao = new LoaiThucDonDAO();
         fillToTable(dao.selectAll());
+        order();
         selectTable();
+        txtSearch.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               
+               
+                btnSearch.doClick();       
+            }
+        });
     }
 
     NhanVien getForm() {
-        NhanVien td = new NhanVien();
-        td.setMaNV(txtMaNV.getText());
-        td.setHoTen(txtTenNV.getText());
-        td.setSoDT(txtSDT.getText());
-        td.setGioiTinh(rbName.isSelected());
-        td.setActive(cbActive.isSelected());
-        td.setAvatar(String.valueOf(fileAnhSP.getName()));
-        td.setChucVu(cboChucVu.getSelectedItem().toString());
-        return td;
+        try {
+            NhanVien td = new NhanVien();
+            td.setMaNV(txtMaNV.getText());
+            td.setHoTen(txtTenNV.getText());
+            td.setSoDT(txtSDT.getText());
+            td.setGioiTinh(rbName.isSelected());
+            td.setActive(cbActive.isSelected());
+            td.setAvatar(String.valueOf(fileAnhSP.getName()));
+            td.setChucVu(cboChucVu.getSelectedItem().toString());
+            return td;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    void order() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tb.getModel());
+        tb.setRowSorter(sorter);
+        tb.getTableHeader().addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int column = tb.columnAtPoint(e.getPoint());
+                sorter.toggleSortOrder(column);
+                sorter.sort();
+            }
+        });
     }
 
     private ImageIcon getAnhSP(String src) {
@@ -183,7 +220,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         btnInportEX.setEnabled(s);
         btnResertPass.setEnabled(s);
         btnPhanQuyen.setEnabled(s);
-        
+
     }
 
     private ImageIcon loadImage(String tenHinh) {
@@ -226,6 +263,8 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         }
         return true;
     }
+
+    
 
     void selectTable() {
         tb.setCellSelectionEnabled(true);
@@ -295,8 +334,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         txtSDT = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
-        setClosable(true);
-        setTitle("Quản lý nhân viên");
+        setTitle("QUẢN LÝ NHÂN VIÊN");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 26)); // NOI18N
         jLabel1.setText("QUẢN LÝ NHÂN VIÊN");
@@ -314,6 +352,11 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         jLabel6.setText("Chức vụ:");
 
         cboChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản lý", "Lễ Tân", "Nhân Viên Phục Vụ" }));
+        cboChucVu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboChucVuActionPerformed(evt);
+            }
+        });
 
         pnImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -460,6 +503,12 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
             }
         });
 
+        txtSDT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSDTKeyTyped(evt);
+            }
+        });
+
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("SDT:");
 
@@ -468,7 +517,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
+                .addContainerGap(137, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -488,7 +537,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
                                 .addGap(19, 19, 19)
                                 .addComponent(btnExPortEX, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnPhanQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(120, 120, 120))
+                .addGap(117, 117, 117))
             .addGroup(layout.createSequentialGroup()
                 .addGap(251, 251, 251)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -627,12 +676,12 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
             int row = tb.getRowCount();
             for (int i = 0; i < row; i++) {
                 String maNV = tb.getValueAt(i, 0).toString();
-                String tenNV = tb.getValueAt(i,1).toString();
-                String SDT = tb.getValueAt(i,2).toString();
-                String ChucVu=tb.getValueAt(i, 3).toString();
+                String tenNV = tb.getValueAt(i, 1).toString();
+                String SDT = tb.getValueAt(i, 2).toString();
+                String ChucVu = tb.getValueAt(i, 3).toString();
                 Boolean GioiTinh = (String.valueOf(tb.getValueAt(i, 4)) == "Nam") ? true : false;
-                Boolean Active=((Boolean) tb.getValueAt(i, 5)).booleanValue();
-                NhanVien a=new NhanVien(maNV, tenNV, SDT, ChucVu, GioiTinh, fileAnhSP.getName(), Active);
+                Boolean Active = ((Boolean) tb.getValueAt(i, 5)).booleanValue();
+                NhanVien a = new NhanVien(maNV, tenNV, SDT, ChucVu, GioiTinh, fileAnhSP.getName(), Active);
                 if (a != null) {
                     dao.insertOrUpdate(a);
                 }
@@ -643,7 +692,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
                 return;
             } else {
                 InsertOrUpdate();
-                
+
             }
         }
         Enable(true);
@@ -673,7 +722,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-         
+
         if (!txtMaNV.getText().isEmpty()) {
             if (MsgBox.confirm(this, "Bạn có chắc chắn muốn xóa nhân viên " + txtTenNV.getText() + " ra khỏi danh sách không?")) {
                 dao.delete(txtMaNV.getText());
@@ -748,19 +797,32 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExPortEXActionPerformed
 
     private void btnResertPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResertPassActionPerformed
-        if(!checkVal())
+        if (!checkVal()) {
             return;// TODO add your handling code here:
-        if(MsgBox.confirm(this, "Bạn có chắc chắn muốn đặt lại mật khẩu cho user "+txtTenNV.getText()+" không?"))
-        {
-             dao.ResertPass (txtMaNV.getText());
-             MyDialog dlg = new MyDialog("Đã đặt mật khẩu!", MyDialog.SUCCESS_DIALOG);
-             
+        }
+        if (MsgBox.confirm(this, "Bạn có chắc chắn muốn đặt lại mật khẩu cho user " + txtTenNV.getText() + " không?")) {
+            dao.ResertPass(txtMaNV.getText());
+            MyDialog dlg = new MyDialog("Đã đặt mật khẩu!", MyDialog.SUCCESS_DIALOG);
+
         }
     }//GEN-LAST:event_btnResertPassActionPerformed
 
     private void btnPhanQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanQuyenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPhanQuyenActionPerformed
+
+    private void cboChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboChucVuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboChucVuActionPerformed
+
+    private void txtSDTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSDTKeyTyped
+        // TODO add your handling code here:
+        char c=evt.getKeyChar();
+        if(!Character.isDigit(c))
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtSDTKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

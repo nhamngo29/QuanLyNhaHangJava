@@ -4,6 +4,12 @@
  */
 package View;
 
+import Custom.MD5;
+import Custom.MyDialog;
+import DAO.NhanVienDAO;
+import UIS.Auth;
+import UIS.MsgBox;
+
 /**
  *
  * @author Nham Ngo
@@ -13,8 +19,9 @@ public class frmChangePassword extends javax.swing.JDialog {
     /**
      * Creates new form frmChangePassword
      */
+    NhanVienDAO dao;
     public frmChangePassword(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, true);
         initComponents();
     }
 
@@ -47,17 +54,17 @@ public class frmChangePassword extends javax.swing.JDialog {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\Img\\logo.png")); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Mật khẩu cũ");
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Mật khẩu mới");
 
         jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
 
         jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Nhập lại mật khẩu");
 
         jSeparator5.setForeground(new java.awt.Color(255, 255, 255));
@@ -70,6 +77,7 @@ public class frmChangePassword extends javax.swing.JDialog {
             }
         });
 
+        cbShowPass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         cbShowPass.setText("Show password");
         cbShowPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,35 +105,36 @@ public class frmChangePassword extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(cbShowPass)
+                    .addComponent(txtOldPass)
+                    .addComponent(jSeparator4)
+                    .addComponent(txtPassAgin)
+                    .addComponent(jLabel4)
+                    .addComponent(txtPassNew)
+                    .addComponent(jSeparator5)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(100, 100, 100))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(75, 75, 75))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(cbShowPass)
-                            .addComponent(txtOldPass)
-                            .addComponent(jSeparator4)
-                            .addComponent(txtPassAgin)
-                            .addComponent(jLabel4)
-                            .addComponent(txtPassNew)
-                            .addComponent(jSeparator5)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(103, 103, 103))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnChangePass, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(140, 140, 140))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(btnChangePass, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(47, 47, 47)
+                .addGap(0, 0, 0)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtOldPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,9 +154,9 @@ public class frmChangePassword extends javax.swing.JDialog {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbShowPass)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnChangePass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(0, 34, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,7 +164,32 @@ public class frmChangePassword extends javax.swing.JDialog {
 
     private void btnChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePassActionPerformed
         // TODO add your handling code here:
+        if(MD5.getMd5(txtOldPass.getText()).equals(Auth.user.getMatKhau()))
+        {
+            if(txtPassNew.getText().equals(txtPassAgin.getText()))
+            {
+                
+                dao.changePass(Auth.user.getMaNV(),MD5.getMd5(txtPassNew.getText()));
+                new MyDialog("Thay đổi mật khẩu thành công!", MyDialog.SUCCESS_DIALOG);
+                
+                
+            }
+            else{
+                MsgBox.alert(this, "Mật khẩu không khớp");
+            }
+                
+        }
+        else
+        {
+            MsgBox.alert(this, "Sai mật khẩu rồi.!");
+        }
     }//GEN-LAST:event_btnChangePassActionPerformed
+
+    public frmChangePassword() {
+        this.setModal(true);
+        initComponents();
+        dao=new NhanVienDAO();
+    }
 
     private void txtOldPassFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtOldPassFocusGained
         // TODO add your handling code here:

@@ -5,26 +5,41 @@
 package View.QuanLy;
 
 import Custom.MyDialog;
+import DAO.DataProvider;
 import DAO.KhoHangDAO;
 import POJO.KhoHang;
 import UIS.Auth;
+import static View.QuanLy.frmQLHangHoa.tb;
 import java.awt.print.PrinterException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author Nham Ngo
  */
 public class Dlg_XuatHangHoa extends javax.swing.JDialog {
-
+    DataProvider data;
     KhoHang a;
     KhoHangDAO dao;
     public Dlg_XuatHangHoa(KhoHang a) {
 
         initComponents();
+        this.setModal(true);
         this.setLocationRelativeTo(null);
         dao=new KhoHangDAO();
         this.a = a;
@@ -37,7 +52,14 @@ public class Dlg_XuatHangHoa extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-
+    public  void fillToTable(List<KhoHang> a) {
+        DefaultTableModel model = (DefaultTableModel) frmQLHangHoa.tb.getModel();
+        model.setRowCount(0);
+        for (KhoHang p : a) {
+            
+            model.addRow(new Object[]{p.getMaHangHoa(), p.getTenHangHoa(), p.getNgayNhap(), p.getDonVi(), p.getSoLuong(), p.getChiPhi(), p.getTongChiPhi()});
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -248,6 +270,17 @@ public class Dlg_XuatHangHoa extends javax.swing.JDialog {
         new MyDialog("Xác nhận thành công!", MyDialog.SUCCESS_DIALOG);
         btnSubmit.setEnabled(false);
         btnPrint.setEnabled(true);
+        if(a.getSoLuong()-Integer.parseInt(txtSoLuong.getText())<=0)
+        {
+            dao.delete(a.getMaHangHoa());
+            
+        }
+        else
+        {
+            a.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
+            dao.insertOrUpdate(a);
+        }
+        fillToTable(dao.selectAll());
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -256,11 +289,18 @@ public class Dlg_XuatHangHoa extends javax.swing.JDialog {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
+        if(txtMaHH.getText().length()<=0)
+            return;
         try {
-            txtChiTiet.print();
-        } catch (PrinterException e) {
+            
+
+            JasperReport report = JasperCompileManager.compileReport("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Report\\report1.jrxml");
+            JasperPrint p = JasperFillManager.fillReport(report,  null, data.getConnection() );
+            JasperViewer.viewReport(p);
+//            JasperExportManager.exportReportToPdfFile(p, "test.pdf");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
-        this.dispose();
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void txtSoLuongKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoLuongKeyPressed

@@ -22,6 +22,12 @@ public class ChiTietHoaDon {
     public ChiTietHoaDon() {
     }
 
+    public ChiTietHoaDon(String MaMon, int maHD, int soLuong) {
+        this.MaMon = MaMon;
+        this.maHD = maHD;
+        this.soLuong = soLuong;
+    }
+
     public ChiTietHoaDon(int maCTHD, String TenMon, String MaMon, int maHD, int soLuong, double giatien, double tongTien, String ghiChu, int MaBan) {
         this.maCTHD = maCTHD;
         this.TenMon = TenMon;

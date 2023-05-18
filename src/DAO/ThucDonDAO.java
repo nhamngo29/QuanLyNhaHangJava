@@ -21,10 +21,11 @@ public class ThucDonDAO extends NhaHangDAO<ThucDon, String> {
     String DELETE_SQL = "DELETE FROM ThucDon WHERE MaMon =?";
     String SELECT_ALL_SQL = "SELECT * FROM ThucDon";
     String SELETE_BY_ID_SQL = "SELECT * FROM ThucDon WHERE MaMon =?";
-    String FIND_BY_SQL="{CALL SP_FindThucDon(?)}";
+    String SELETE_BY_LOAI_MA_MA_SQL = "SELECT * FROM ThucDon WHERE LoaiThucDon =?";
     public List<ThucDon> FIND_ThucDon(String ten)
     {
-        List<ThucDon> list = this.selectBySql(FIND_BY_SQL, ten);
+        String sql = "SELECT * FROM ThucDon WHERE TenMon LIKE N'%" + ten + "%' ";
+        List<ThucDon> list = this.selectBySql(sql);
         if (list.isEmpty()) {
             
             return null;
@@ -82,7 +83,10 @@ public class ThucDonDAO extends NhaHangDAO<ThucDon, String> {
             throw new RuntimeException(e);
         }
     }
-
+    public List<ThucDon> selectByLoaiMA(int id)
+    {
+        return this.selectBySql(SELETE_BY_LOAI_MA_MA_SQL, id);
+    }
     @Override
     public void insertOrUpdate(ThucDon entity) {
         try {
