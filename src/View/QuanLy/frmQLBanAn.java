@@ -153,6 +153,8 @@ public class frmQLBanAn extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tb = new javax.swing.JTable();
 
+        setResizable(true);
+        setTitle("QUẢN LÝ BÀN ĂN");
         setPreferredSize(new java.awt.Dimension(1159, 637));
 
         txtStt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sẵn Sàng", "Đang Sửa", "Hư" }));
@@ -327,7 +329,7 @@ public class frmQLBanAn extends javax.swing.JInternalFrame {
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         // TODO add your handling code here:
         if (!txtID.getText().isEmpty()) {
-            if (MsgBox.confirm(this, "Bạn có chắc chắn muốn xóa món " + txtNam.getText() + " ra khỏi thức đơn không?")) {
+            if (MsgBox.confirm(this, "Bạn có chắc chắn muốn xóa bàn " + txtNam.getText() + " ra khỏi danh sách không?")) {
                 dao.delete(Integer.parseInt(txtID.getText()));
                 fillToTable(dao.selectAll());
                 this.clearForm(); // xóa trắng form

@@ -263,8 +263,8 @@ public class frmDatBan extends javax.swing.JInternalFrame {
         });
         pmenu.add(pmenuEdit);
 
-        setClosable(true);
-        setTitle("Đặt bàn");
+        setResizable(true);
+        setTitle("ĐẶT BÀN");
 
         cboNgayDat.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cboNgayDat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngày đặt", "Mới nhất ↓", "Cũ nhất  ↑" }));

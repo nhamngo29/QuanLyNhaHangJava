@@ -22,10 +22,10 @@ public class ThucDonDAO extends NhaHangDAO<ThucDon, String> {
     String SELECT_ALL_SQL = "SELECT * FROM ThucDon";
     String SELETE_BY_ID_SQL = "SELECT * FROM ThucDon WHERE MaMon =?";
     String SELETE_BY_LOAI_MA_MA_SQL = "SELECT * FROM ThucDon WHERE LoaiThucDon =?";
-    String FIND_BY_SQL="{CALL SP_FindThucDon(?)}";
     public List<ThucDon> FIND_ThucDon(String ten)
     {
-        List<ThucDon> list = this.selectBySql(FIND_BY_SQL, ten);
+        String sql = "SELECT * FROM ThucDon WHERE TenMon LIKE N'%" + ten + "%' ";
+        List<ThucDon> list = this.selectBySql(sql);
         if (list.isEmpty()) {
             
             return null;

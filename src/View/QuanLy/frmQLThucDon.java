@@ -16,6 +16,8 @@ import UIS.MsgBox;
 import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -23,6 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +34,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -83,12 +87,18 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
     //Thêm
     void InsertOrUpdate() {
         ThucDon td = getForm();
-
-        dao.insertOrUpdate(td);
-        fillToTable(dao.selectAll());
-        this.clearForm(); // xóa trắng form
-        luuFileAnh();
-        MsgBox.alert(this, "Thêm mới,update thành công!");
+        if(td!=null)
+        {
+            dao.insertOrUpdate(td);
+            fillToTable(dao.selectAll());
+            this.clearForm(); // xóa trắng form
+            luuFileAnh();
+            MsgBox.alert(this, "Thêm mới,update thành công!");
+        }
+        else
+        {
+            MsgBox.alert(this, "Thêm mới,update không thành công!");
+        }
 
     }
     //Xóa
@@ -110,17 +120,33 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
         tb.getColumnModel().getColumn(4).setWidth(0);
         tb.getColumnModel().getColumn(4).setMinWidth(0);
         tb.getColumnModel().getColumn(4).setMaxWidth(0);
+        txtSearch.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               
+               
+                btnSearch.doClick();       
+            }
+        });
     }
 
     ThucDon getForm() {
         try {
             ThucDon td = new ThucDon();
             td.setMaMon(txtMaMon.getText());
+            System.out.println(td.getMaMon());
             td.setTenMon(txtTenMon.getText());
-            td.setGiaTien(Float.parseFloat(txtGia.getText()));
+            System.out.println(td.getTenMon());
+            td.setGiaTien(Float.parseFloat(txtGia.getText().replaceAll("[^\\d.]+", "")));
+            System.out.println(td.getGiaTien()+"");
             LoaiThucDon a = (LoaiThucDon) cboLoai.getSelectedItem();
+            
             td.setLoai(a.getMaLoaiTD());
-            td.setHinhAnh(String.valueOf(fileAnhSP.getName()));
+            System.out.println(td.getLoai()+"");
+            if(fileAnhSP!=null)
+                td.setHinhAnh(String.valueOf(fileAnhSP.getName()));
+            else
+                 td.setHinhAnh(null);
             return td;
         } catch (Exception e) {
             MyDialog dlg=new MyDialog("Sai dữ liệu vui lòng kiệm tra lại", ERROR);
@@ -189,10 +215,11 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
     }
 
     void fillToTable(List<ThucDon> a) {
+        DecimalFormat dcf = new DecimalFormat("###,###,### VND");
         DefaultTableModel model = (DefaultTableModel) tb.getModel();
         model.setRowCount(0);
         for (ThucDon p : a) {
-            model.addRow(new Object[]{p.getMaMon(), p.getTenMon(), p.getGiaTien(), ltdDao.selectById(p.getLoai()), p.getHinhAnh()});
+            model.addRow(new Object[]{p.getMaMon(), p.getTenMon(), dcf.format(p.getGiaTien()), ltdDao.selectById(p.getLoai()), p.getHinhAnh()});
         }
     }
 
@@ -235,18 +262,23 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Bạn chưa nhập tên món ăn!");
             return false;
         }
-        if (txtGia.getText().isEmpty() || txtGia.getText().equalsIgnoreCase("")) {
-            MsgBox.alert(this, "Bạn chưa nhập giá món ăn!");
+        if (Integer.parseInt(txtGia.getText().replaceAll("[^\\d.]+", ""))<0) {
+            MsgBox.alert(this, "Giá món không được âm");
             return false;
         }
         try {
-            Float.valueOf(txtGia.getText());
+            Float.valueOf(txtGia.getText().replaceAll("[^\\d.]+", ""));
         } catch (Exception e) {
             MsgBox.alert(this, "Giá món ăn không đúng định dạng");
             return false;
         }
-        if (cboLoai.getSelectedIndex() == 0) {
+        if (cboLoai.getSelectedIndex() == -1) {
             MsgBox.alert(this, "Bạn chưa chọn loại món ăn!");
+            return false;
+        }
+        if(fileAnhSP==null)
+        {
+            MsgBox.alert(this, "Bạn chưa chọn hình ảnh cho món ăn!");
             return false;
         }
         return true;
@@ -310,8 +342,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
         btnExPortEX = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
 
-        setClosable(true);
-        setTitle("Quản lý sản phẩm");
+        setTitle("QUẢN LÝ THỰC ĐƠN");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 26)); // NOI18N
         jLabel1.setText("QUẢN LÝ THỰC ĐƠN");
@@ -327,6 +358,12 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Loại:");
+
+        txtGia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtGiaKeyTyped(evt);
+            }
+        });
 
         pnImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -508,7 +545,7 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(btnSearch)))
-                .addGap(18, 18, 18)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -593,7 +630,6 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
                 return;
             } else {
                 InsertOrUpdate();
-                
             }
         }
         Enable(true);
@@ -691,6 +727,15 @@ public class frmQLThucDon extends javax.swing.JInternalFrame {
 //        }catch(IOException ex){}
         xuLyXuatFileExcel();
     }//GEN-LAST:event_btnExPortEXActionPerformed
+
+    private void txtGiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiaKeyTyped
+        // TODO add your handling code here:
+        char c=evt.getKeyChar();
+        if(!Character.isDigit(c))
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtGiaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

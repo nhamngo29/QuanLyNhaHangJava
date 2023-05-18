@@ -555,7 +555,6 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
         insertMonAn(idHD);
         fillToTable(daoCTHD.getchiTietHoaDonbySoBan(idBan));
         loadTable();
-        clear();
     }
 
     void insertMonAn(int idHD) {
@@ -750,7 +749,13 @@ public class frmOrder extends javax.swing.JInternalFrame implements ActionListen
 
     }//GEN-LAST:event_btnThanhToanMouseClicked
     private boolean checkBan() {
+        
         BanAn a = (BanAn) cboBanAn.getSelectedItem();
+        if(a==null)
+        {
+            MsgBox.alert(this, "Vui lòng chọn bàn để chuyển");
+            return false;
+        }
         System.out.println(a.getMaBan() + "");
         if (a.getMaBan() == Integer.parseInt(lblSoBan.getText())) {
             MsgBox.alert(this, "Bàn chuyển,gộp không được trùng nhau");

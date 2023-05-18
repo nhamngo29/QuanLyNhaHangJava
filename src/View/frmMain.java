@@ -14,7 +14,16 @@ import View.QuanLy.frmQLDoanhThu;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.BorderLayout;
+import java.beans.PropertyVetoException;
+import javax.swing.JRootPane;
+import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.WindowConstants;
+import javax.swing.JProgressBar;
+import javax.swing.SwingWorker;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -26,7 +35,8 @@ public class frmMain extends javax.swing.JFrame {
      * Creates new form frmMain
      */
     NhanVien nv;
-
+    private static final long serialVersionUID = 1L;
+    private JProgressBar progressBar;
     public frmMain() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -35,9 +45,12 @@ public class frmMain extends javax.swing.JFrame {
         frm.setMaximizable(true);
         frm.setSize(desktopPane.getSize());
         
-       
+
+        frm.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
+
         this.desktopPane.add(frm);
          frm.setVisible(true);
+         frm.setResizable(false);
         if(Auth.isManager())
         {
             btnQuanLy.setVisible(true);
@@ -215,6 +228,7 @@ public class frmMain extends javax.swing.JFrame {
     private void menuItemQLFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuItemQLFoodMouseClicked
         frmQLThucDon frm = new frmQLThucDon();
         frm.setMaximizable(true);
+        frm.setResizable(false);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         frm.setLayout(new BorderLayout());
@@ -225,6 +239,8 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmQLThucDon frm = new frmQLThucDon();
+       
+        frm.setResizable(false);
         frm.setMaximizable(true);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
@@ -233,7 +249,9 @@ public class frmMain extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         desktopPane.removeAll();
+        
         frmQLNhanVien frm = new frmQLNhanVien();
+        frm.setResizable(false);
         frm.setMaximizable(true);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
@@ -245,6 +263,7 @@ public class frmMain extends javax.swing.JFrame {
         desktopPane.removeAll();
         frmQLHangHoa frm = new frmQLHangHoa();
         frm.setMaximizable(true);
+        frm.setResizable(false);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
         this.desktopPane.add(frm);
@@ -257,6 +276,7 @@ public class frmMain extends javax.swing.JFrame {
     private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
         // TODO add your handling code here:
         frmInformationAccount frm=new frmInformationAccount();
+        frm.setResizable(false);
         frm.setVisible(true);
         frm.setLocationRelativeTo(null);
     }//GEN-LAST:event_cutMenuItemActionPerformed
@@ -265,6 +285,7 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here
         desktopPane.removeAll();
         frmDatBan frm = new frmDatBan();
+        frm.setResizable(false);
         frm.setMaximizable(true);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
@@ -275,6 +296,7 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmQLDoanhThu frm = new frmQLDoanhThu();
+        frm.setResizable(false);
         frm.setMaximizable(true);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
@@ -285,6 +307,7 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmQLBanAn frm = new frmQLBanAn();
+        frm.setResizable(false);
         frm.setMaximizable(true);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
@@ -295,6 +318,7 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         desktopPane.removeAll();
         frmOrder frm = new frmOrder();
+        frm.setResizable(false);
         frm.setMaximizable(true);
         frm.setSize(desktopPane.getSize());
         frm.setVisible(true);
@@ -304,6 +328,7 @@ public class frmMain extends javax.swing.JFrame {
     private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
         // TODO add your handling code here:
         frmLogin frm=new frmLogin();
+        frm.setResizable(false);
         frm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_copyMenuItemActionPerformed
@@ -333,6 +358,7 @@ public class frmMain extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

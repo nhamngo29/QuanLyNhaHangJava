@@ -18,6 +18,8 @@ import UIS.MsgBox;
 import static java.awt.Desktop.getDesktop;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -104,6 +106,14 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         fillToTable(dao.selectAll());
         order();
         selectTable();
+        txtSearch.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               
+               
+                btnSearch.doClick();       
+            }
+        });
     }
 
     NhanVien getForm() {
@@ -324,8 +334,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         txtSDT = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
 
-        setClosable(true);
-        setTitle("Quản lý nhân viên");
+        setTitle("QUẢN LÝ NHÂN VIÊN");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 26)); // NOI18N
         jLabel1.setText("QUẢN LÝ NHÂN VIÊN");
@@ -494,6 +503,12 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
             }
         });
 
+        txtSDT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSDTKeyTyped(evt);
+            }
+        });
+
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("SDT:");
 
@@ -502,7 +517,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
+                .addContainerGap(137, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -522,7 +537,7 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
                                 .addGap(19, 19, 19)
                                 .addComponent(btnExPortEX, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnPhanQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(120, 120, 120))
+                .addGap(117, 117, 117))
             .addGroup(layout.createSequentialGroup()
                 .addGap(251, 251, 251)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -799,6 +814,15 @@ public class frmQLNhanVien extends javax.swing.JInternalFrame {
     private void cboChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboChucVuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboChucVuActionPerformed
+
+    private void txtSDTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSDTKeyTyped
+        // TODO add your handling code here:
+        char c=evt.getKeyChar();
+        if(!Character.isDigit(c))
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtSDTKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

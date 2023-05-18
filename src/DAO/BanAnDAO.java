@@ -17,9 +17,9 @@ import java.util.List;
 public class BanAnDAO extends NhaHangDAO<BanAn, Integer>{
 
     String INSERT_OR_UPDATE_SQL = "{CALL SP_InsertOrUpdateBanAn(?,?,?)}";
-    String DELETE_SQL = "DELETE FROM BanAn WHERE MaBanAn =?";
+    String DELETE_SQL = "DELETE FROM BanAn WHERE MaBan =?";
     String SELECT_ALL_SQL = "SELECT * FROM BanAn";
-    String SELETE_BY_ID = "SELECT * FROM BanAn WHERE MaBanAn =?";
+    String SELETE_BY_ID = "SELECT * FROM BanAn WHERE MaBan=?";
     @Override
     public void insertOrUpdate(BanAn entity) {
        try {

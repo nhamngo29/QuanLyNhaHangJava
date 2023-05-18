@@ -78,6 +78,7 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
     //Xóa
     //Sữa
     HoaDonDAO dao;
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     private JFreeChart barChart;
 
     public frmQLDoanhThu() {
@@ -106,10 +107,19 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
     }
 
     void fillToTable(List<HoaDon> a) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat newFormat = new SimpleDateFormat("dd/MM/yyyy");
         DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
         model.setRowCount(0);
         for (HoaDon p : a) {
-            model.addRow(new Object[]{p.getMaHD(), p.getNgayTao(), p.getMaNV(), p.getMaBan(), p.getTongTien(), p.getTrangThai()});
+            try {
+                Date date = format.parse(p.getNgayTao());
+                model.addRow(new Object[]{p.getMaHD(), newFormat.format(date), p.getMaNV(), p.getMaBan(), p.getTongTien(), p.getTrangThai()});
+            } catch (ParseException ex) {
+                 model.addRow(new Object[]{p.getMaHD(), p.getNgayTao(), p.getMaNV(), p.getMaBan(), p.getTongTien(), p.getTrangThai()});
+                Logger.getLogger(frmQLDoanhThu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
         }
     }
 
@@ -156,8 +166,7 @@ public class frmQLDoanhThu extends javax.swing.JInternalFrame {
 
         jTextField1.setText("jTextField1");
 
-        setClosable(true);
-        setTitle("Quản lý sản phẩm");
+        setTitle("QUẢN LÝ HÓA ĐƠN");
 
         cboNgay.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cboNgay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắp xếp theo ngày", "Ngày mới nhất", "Ngày cũ nhất" }));

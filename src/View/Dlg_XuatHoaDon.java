@@ -126,8 +126,8 @@ public class Dlg_XuatHoaDon extends JDialog {
             hd += "<td style='text-align:center;'>" + cthd.getMaMon() + "</td>";
             hd += "<td style='text-align:left;'>" + cthd.getTenMon() + "</td>";
             hd += "<td style='text-align:center;'>" + cthd.getSoLuong() + "</td>";
-            hd += "<td style='text-align:center;'>" + cthd.getGiatien()+ "</td>";
-            hd += "<td style='text-align:center;'>" + (cthd.getSoLuong()*cthd.getGiatien()) + "</td>";
+            hd += "<td style='text-align:center;'>" + dcf.format(cthd.getGiatien())+ "</td>";
+            hd += "<td style='text-align:center;'>" + dcf.format((cthd.getSoLuong()*cthd.getGiatien())) + "</td>";
             hd += "</tr>";
         }
         hd += "<tr>";

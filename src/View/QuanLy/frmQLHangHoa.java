@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,7 +77,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
     //Xóa
     //Sữa
     KhoHangDAO dao;
-   
+   DecimalFormat dcf = new DecimalFormat("###,###,### VND");
+   SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     public frmQLHangHoa() {
         initComponents();
         dao = new KhoHangDAO();
@@ -99,8 +101,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
             td.setTenHangHoa(txtTenHH.getText());
             td.setDonVi(cboDonVi.getSelectedItem().toString());
             td.setNgayNhap(txtNgayNhap.getDate());
-            td.setSoLuong(Integer.parseInt(txtSL.getText()));
-            td.setChiPhi(Double.parseDouble(txtChiPhi.getText()));
+            td.setSoLuong(Integer.parseInt(spnSL.getValue().toString()));
+            td.setChiPhi(Double.parseDouble(txtChiPhi.getText().replaceAll("[^\\d.]+", "")));
             td.setTongChiPhi(td.getSoLuong()*td.getChiPhi());
         return td;
         } catch (Exception e) {
@@ -121,6 +123,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
     void selectTable() {
         tb.setCellSelectionEnabled(true);
         ListSelectionModel select = tb.getSelectionModel();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         select.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -128,9 +131,13 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
                 if (row >= 0) {
                     txtMaHH.setText(tb.getValueAt(row, 0).toString());
                     txtTenHH.setText(tb.getValueAt(row, 1).toString());
-                    txtNgayNhap.setDate((Date) tb.getModel().getValueAt(row, 2));
+                    try {
+                        txtNgayNhap.setDate(formatter.parse(tb.getModel().getValueAt(row, 2).toString()));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(frmQLHangHoa.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     cboDonVi.setSelectedItem(tb.getValueAt(row, 3));
-                    txtSL.setText(tb.getValueAt(row, 4).toString());
+                    spnSL.setValue(Integer.parseInt(tb.getValueAt(row, 4).toString()));
                     txtChiPhi.setText(tb.getValueAt(row, 5).toString());
                     txtTongTien.setText(tb.getValueAt(row, 6).toString());
                 }
@@ -153,7 +160,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         txtMaHH.setText("");
         txtTenHH.setText("");
         txtChiPhi.setText("");
-        txtSL.setText("");
+
+        spnSL.setValue(1);
         txtTongTien.setText("");
         txtNgayNhap.cleanup();
         cboDonVi.setSelectedIndex(-1);
@@ -169,7 +177,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         txtMaHH.setEnabled(s);
         txtTenHH.setEnabled(s);
         txtNgayNhap.setEnabled(s);
-        txtSL.setEnabled(s);
+
+        spnSL.setEnabled(s);
         cboDonVi.setEnabled(s);
         txtChiPhi.setEnabled(s);
     }
@@ -187,8 +196,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
             MsgBox.alert(this, "Bạn chưa nhập ngày nhập!");
             return false;
         }
-        if (txtSL.getText().isEmpty() || txtSL.getText().equalsIgnoreCase("")) {
-            MsgBox.alert(this, "Bạn chưa nhập số lượng!");
+        if (Integer.parseInt(spnSL.getValue().toString())<1) {
+            MsgBox.alert(this, "Số lượng không được nhỏ hơn 1!");
             return false;
         }
         if (txtChiPhi.getText().isEmpty() || txtChiPhi.getText().equalsIgnoreCase("")) {
@@ -229,7 +238,6 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtNgayNhap = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
-        txtSL = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtMaHH = new javax.swing.JTextField();
         btnInsert = new javax.swing.JButton();
@@ -248,6 +256,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        spnSL = new javax.swing.JSpinner();
 
         pmenuRemove.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-remove-20.png")); // NOI18N
         pmenuRemove.setText("               Xóa");
@@ -272,8 +281,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         });
         pmenu.add(pmenuEdit);
 
-        setClosable(true);
-        setTitle("Quản lý sản phẩm");
+        setTitle("QUẢN LÝ HÀNG HÓA");
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Quảng lý hàng hóa"));
 
@@ -378,8 +386,6 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-unit-30.png")); // NOI18N
 
-        txtSL.setText("Số lượng");
-
         jLabel6.setIcon(new javax.swing.ImageIcon("D:\\Learn\\period 2\\Java\\QuanLyNhaHangg\\src\\Assets\\icons\\icons8-code-30.png")); // NOI18N
 
         txtMaHH.setText("Mã hàng hóa");
@@ -418,8 +424,14 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
 
         txtChiPhi.setText("Chi phí");
         txtChiPhi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtChiPhiKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtChiPhiKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtChiPhiKeyTyped(evt);
             }
         });
 
@@ -447,6 +459,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
 
         jLabel17.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel17.setText("Tổng chi phí");
+
+        spnSL.setModel(new javax.swing.SpinnerNumberModel(1, 0, 1000, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -484,11 +498,11 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                             .addComponent(txtChiPhi, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
-                            .addComponent(txtSL)
                             .addComponent(cboDonVi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNgayNhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtTenHH)
-                            .addComponent(txtMaHH))
+                            .addComponent(txtMaHH)
+                            .addComponent(spnSL))
                         .addGap(203, 203, 203))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -517,8 +531,8 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel10)
-                    .addComponent(txtSL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
+                    .addComponent(jLabel15)
+                    .addComponent(spnSL, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel9)
@@ -560,7 +574,7 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         model.setRowCount(0);
         for (KhoHang p : a) {
             
-            model.addRow(new Object[]{p.getMaHangHoa(), p.getTenHangHoa(), p.getNgayNhap(), p.getDonVi(), p.getSoLuong(), p.getChiPhi(), p.getTongChiPhi()});
+            model.addRow(new Object[]{p.getMaHangHoa(), p.getTenHangHoa(), formatter.format(p.getNgayNhap()), p.getDonVi(), p.getSoLuong(), dcf.format(p.getChiPhi()),  dcf.format(p.getTongChiPhi())});
         }
     }
     private void pmenuRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pmenuRemoveMouseClicked
@@ -651,8 +665,10 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
 
     private void txtChiPhiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChiPhiKeyReleased
         // TODO add your handling code here:
-        if(!txtSL.getText().toString().isEmpty())
-            txtTongTien.setText((Integer.parseInt((txtSL.getText().toString()))*Double.parseDouble(txtChiPhi.getText().toString()))+"");
+        if(Integer.parseInt(spnSL.getValue().toString())>0&&!txtChiPhi.getText().isEmpty())
+            txtTongTien.setText(dcf.format((Integer.parseInt((spnSL.getValue().toString()))*Double.parseDouble(txtChiPhi.getText().toString().replaceAll("[^\\d.]+", "")))));
+        else
+            txtTongTien.setText("");
     }//GEN-LAST:event_txtChiPhiKeyReleased
 
     private void btnExportEx1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportEx1ActionPerformed
@@ -685,6 +701,20 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtSearchKeyPressed
 
+    private void txtChiPhiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChiPhiKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtChiPhiKeyPressed
+
+    private void txtChiPhiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChiPhiKeyTyped
+        // TODO add your handling code here:
+        char c=evt.getKeyChar();
+        if(!Character.isDigit(c))
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtChiPhiKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportEx;
@@ -716,11 +746,11 @@ public class frmQLHangHoa extends javax.swing.JInternalFrame {
     private javax.swing.JPopupMenu pmenu;
     private javax.swing.JMenuItem pmenuEdit;
     private javax.swing.JMenuItem pmenuRemove;
+    private javax.swing.JSpinner spnSL;
     public static final javax.swing.JTable tb = new javax.swing.JTable();
     private javax.swing.JTextField txtChiPhi;
     private javax.swing.JTextField txtMaHH;
     private com.toedter.calendar.JDateChooser txtNgayNhap;
-    private javax.swing.JTextField txtSL;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtTenHH;
     private javax.swing.JTextField txtTongTien;

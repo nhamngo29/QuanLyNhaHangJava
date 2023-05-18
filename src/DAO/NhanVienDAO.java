@@ -23,11 +23,11 @@ public class NhanVienDAO extends NhaHangDAO<NhanVien, String>{
     String SELETE_BY_ID_SQL = "SELECT * FROM NHANVIEN WHERE MaNV =?";
     String RESERT_PASSWORD="UPDATE NhanVien SET Password='c4ca4238a0b923820dcc509a6f75849b' WHERE MaNV=?";
     String SP_LOGIN="{CALL SP_Login(?,?)}";
-    String FIND_BY_SQL="{CALL SP_FindNhanVien(?)}";
     String CHANGE_PASS="{CALL SP_ChangePass(?,?)}";
     public List<NhanVien> FIND_NhanVien(String ten)
     {
-        List<NhanVien> list = this.selectBySql(FIND_BY_SQL, ten);
+        String sql = "SELECT * FROM NhanVien WHERE HoTen LIKE N'%" + ten + "%' ";
+        List<NhanVien> list = this.selectBySql(sql);
         if (list.isEmpty()) {
             
             return null;
