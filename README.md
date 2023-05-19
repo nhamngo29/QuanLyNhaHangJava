@@ -6,7 +6,7 @@
 <ul>
   <li>Nguyễn Nhâm Ngọ (https://github.com/nhamngo29)</li>
   <li>Trần Quang Khải</li>
-  <li>Nguyễn Cường</li>
+  <li>Nguyễn Quốc Cường</li>
 </ul>
 
 <div align="center">
@@ -18,7 +18,7 @@
 | STT | Họ tên  | Nôi dung công việc | Ghi chú |
 |--------------|-------|------|-------|
 | 1 | Nguyễn Nhâm Ngọ | - Thiết kệ CSDL,nhập liêu,proc,trigger nhập liệu bảng </br> - Form quản lý thực đơn , from nhập xuất kho , from hóa đơn , from nhân viên , from bàn ăn ,from tài khoản frm main , from đặt bàn, from order xử lý nghiệp vụ tất cả các form | Hoàn thành 100%  |
-| 2 | Nguyễn Văn Cường | - From quản lý hóa đơn,thông kê,vẽ sơ đồ ,viết trigger nghiệp của form | Hoàn thành 100% |
+| 2 | Nguyễn Quốc Cường | - From quản lý hóa đơn,thông kê,vẽ sơ đồ ,viết trigger nghiệp của form | Hoàn thành 100% |
 | 3  | Trần Quang Khải | - Thiết kế CSDL,giao diện form order | Hoàn thành 80% |
 
 ### Mục lục
